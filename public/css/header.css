@@ -1,0 +1,29 @@
+nav {
+  /* background-image: url("/img/griffes.png"); */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  border: groove;
+  background-color: #cecdcd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+nav a {
+  text-decoration: none;
+  font: caption;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 25px;
+}
+
+nav a:hover {
+  background-color: #ededed;
+}
+
+body {
+    padding-top: 100px;
+}

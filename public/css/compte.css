@@ -1,0 +1,32 @@
+main {
+    background-image: url('img/Back.jpg');
+    background-size: cover;
+    background-position: center;
+    border: groove;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    width: 950px;
+    margin: auto;
+}
+
+h2 {
+    color: #fff;
+    text-shadow: black;
+    width: 100%;
+    background: linear-gradient(to right, #0a8e07, #425b03);
+}
+
+table {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
