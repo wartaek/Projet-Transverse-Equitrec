@@ -23,7 +23,8 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-
+/*alias ia='openai_pipe'
+echo faire application python orienté objet gerant des personnes | ia >test.py*/
 th,
 td {
     padding: 8px;
