@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230313155819 extends AbstractMigration
+final class Version20230314152347 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -36,8 +36,12 @@ final class Version20230313155819 extends AbstractMigration
         $this->addSql('CREATE TABLE parametrer_obstacle (parametrer_id INT NOT NULL, obstacle_id INT NOT NULL, INDEX IDX_5EC5E838FC1282CB (parametrer_id), INDEX IDX_5EC5E838F616DCDF (obstacle_id), PRIMARY KEY(parametrer_id, obstacle_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE penalite (id INT AUTO_INCREMENT NOT NULL, libelle_penalite VARCHAR(50) NOT NULL, description VARCHAR(50) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE penalite_note_total (penalite_id INT NOT NULL, note_total_id INT NOT NULL, INDEX IDX_4410E019D0CCF327 (penalite_id), INDEX IDX_4410E019FC8CE522 (note_total_id), PRIMARY KEY(penalite_id, note_total_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE posseder (id INT AUTO_INCREMENT NOT NULL, val INT NOT NULL, nom VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE posseder_note_total (posseder_id INT NOT NULL, note_total_id INT NOT NULL, INDEX IDX_E264181C1DB77787 (posseder_id), INDEX IDX_E264181CFC8CE522 (note_total_id), PRIMARY KEY(posseder_id, note_total_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE posseder_type_note (posseder_id INT NOT NULL, type_note_id INT NOT NULL, INDEX IDX_9CB4DF311DB77787 (posseder_id), INDEX IDX_9CB4DF31ECC67A0 (type_note_id), PRIMARY KEY(posseder_id, type_note_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE type_note (id INT AUTO_INCREMENT NOT NULL, libelle_type_note VARCHAR(50) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE type_note_note_total (type_note_id INT NOT NULL, note_total_id INT NOT NULL, INDEX IDX_30ACFFCDECC67A0 (type_note_id), INDEX IDX_30ACFFCDFC8CE522 (note_total_id), PRIMARY KEY(type_note_id, note_total_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, note_total_id INT DEFAULT NULL, competition_id INT DEFAULT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, name VARCHAR(255) DEFAULT NULL, last_login DATETIME NOT NULL, register_date DATETIME NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX IDX_8D93D649FC8CE522 (note_total_id), INDEX IDX_8D93D6497B39D312 (competition_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL, available_at DATETIME NOT NULL, delivered_at DATETIME DEFAULT NULL, INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE categorie_epreuve ADD CONSTRAINT FK_892E4ADDBCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE categorie_epreuve ADD CONSTRAINT FK_892E4ADDAB990336 FOREIGN KEY (epreuve_id) REFERENCES epreuve (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE cavalier ADD CONSTRAINT FK_FFD9B8A7FC8CE522 FOREIGN KEY (note_total_id) REFERENCES note_total (id)');
@@ -55,20 +59,17 @@ final class Version20230313155819 extends AbstractMigration
         $this->addSql('ALTER TABLE parametrer_obstacle ADD CONSTRAINT FK_5EC5E838F616DCDF FOREIGN KEY (obstacle_id) REFERENCES obstacle (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE penalite_note_total ADD CONSTRAINT FK_4410E019D0CCF327 FOREIGN KEY (penalite_id) REFERENCES penalite (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE penalite_note_total ADD CONSTRAINT FK_4410E019FC8CE522 FOREIGN KEY (note_total_id) REFERENCES note_total (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE type_note_note_total ADD CONSTRAINT FK_30ACFFCDECC67A0 FOREIGN KEY (type_note_id) REFERENCES type_note (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE type_note_note_total ADD CONSTRAINT FK_30ACFFCDFC8CE522 FOREIGN KEY (note_total_id) REFERENCES note_total (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE user ADD note_total_id INT DEFAULT NULL, ADD competition_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE posseder_note_total ADD CONSTRAINT FK_E264181C1DB77787 FOREIGN KEY (posseder_id) REFERENCES posseder (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE posseder_note_total ADD CONSTRAINT FK_E264181CFC8CE522 FOREIGN KEY (note_total_id) REFERENCES note_total (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE posseder_type_note ADD CONSTRAINT FK_9CB4DF311DB77787 FOREIGN KEY (posseder_id) REFERENCES posseder (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE posseder_type_note ADD CONSTRAINT FK_9CB4DF31ECC67A0 FOREIGN KEY (type_note_id) REFERENCES type_note (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649FC8CE522 FOREIGN KEY (note_total_id) REFERENCES note_total (id)');
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D6497B39D312 FOREIGN KEY (competition_id) REFERENCES competition (id)');
-        $this->addSql('CREATE INDEX IDX_8D93D649FC8CE522 ON user (note_total_id)');
-        $this->addSql('CREATE INDEX IDX_8D93D6497B39D312 ON user (competition_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D6497B39D312');
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649FC8CE522');
         $this->addSql('ALTER TABLE categorie_epreuve DROP FOREIGN KEY FK_892E4ADDBCF5E72D');
         $this->addSql('ALTER TABLE categorie_epreuve DROP FOREIGN KEY FK_892E4ADDAB990336');
         $this->addSql('ALTER TABLE cavalier DROP FOREIGN KEY FK_FFD9B8A7FC8CE522');
@@ -86,8 +87,12 @@ final class Version20230313155819 extends AbstractMigration
         $this->addSql('ALTER TABLE parametrer_obstacle DROP FOREIGN KEY FK_5EC5E838F616DCDF');
         $this->addSql('ALTER TABLE penalite_note_total DROP FOREIGN KEY FK_4410E019D0CCF327');
         $this->addSql('ALTER TABLE penalite_note_total DROP FOREIGN KEY FK_4410E019FC8CE522');
-        $this->addSql('ALTER TABLE type_note_note_total DROP FOREIGN KEY FK_30ACFFCDECC67A0');
-        $this->addSql('ALTER TABLE type_note_note_total DROP FOREIGN KEY FK_30ACFFCDFC8CE522');
+        $this->addSql('ALTER TABLE posseder_note_total DROP FOREIGN KEY FK_E264181C1DB77787');
+        $this->addSql('ALTER TABLE posseder_note_total DROP FOREIGN KEY FK_E264181CFC8CE522');
+        $this->addSql('ALTER TABLE posseder_type_note DROP FOREIGN KEY FK_9CB4DF311DB77787');
+        $this->addSql('ALTER TABLE posseder_type_note DROP FOREIGN KEY FK_9CB4DF31ECC67A0');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649FC8CE522');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D6497B39D312');
         $this->addSql('DROP TABLE categorie');
         $this->addSql('DROP TABLE categorie_epreuve');
         $this->addSql('DROP TABLE cavalier');
@@ -104,10 +109,11 @@ final class Version20230313155819 extends AbstractMigration
         $this->addSql('DROP TABLE parametrer_obstacle');
         $this->addSql('DROP TABLE penalite');
         $this->addSql('DROP TABLE penalite_note_total');
+        $this->addSql('DROP TABLE posseder');
+        $this->addSql('DROP TABLE posseder_note_total');
+        $this->addSql('DROP TABLE posseder_type_note');
         $this->addSql('DROP TABLE type_note');
-        $this->addSql('DROP TABLE type_note_note_total');
-        $this->addSql('DROP INDEX IDX_8D93D649FC8CE522 ON user');
-        $this->addSql('DROP INDEX IDX_8D93D6497B39D312 ON user');
-        $this->addSql('ALTER TABLE user DROP note_total_id, DROP competition_id');
+        $this->addSql('DROP TABLE user');
+        $this->addSql('DROP TABLE messenger_messages');
     }
 }

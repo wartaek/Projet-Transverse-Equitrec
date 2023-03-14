@@ -18,13 +18,14 @@ class TypeNote
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $libelleTypeNote = null;
 
-    #[ORM\ManyToMany(targetEntity: NoteTotal::class, inversedBy: 'typeNotes')]
-    private Collection $noteTotal;
+    #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'typeNote')]
+    private Collection $posseders;
 
     public function __construct()
     {
-        $this->noteTotal = new ArrayCollection();
+        $this->posseders = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -44,26 +45,30 @@ class TypeNote
     }
 
     /**
-     * @return Collection<int, NoteTotal>
+     * @return Collection<int, Posseder>
      */
-    public function getNoteTotal(): Collection
+    public function getPosseders(): Collection
     {
-        return $this->noteTotal;
+        return $this->posseders;
     }
 
-    public function addNoteTotal(NoteTotal $noteTotal): self
+    public function addPosseder(Posseder $posseder): self
     {
-        if (!$this->noteTotal->contains($noteTotal)) {
-            $this->noteTotal->add($noteTotal);
+        if (!$this->posseders->contains($posseder)) {
+            $this->posseders->add($posseder);
+            $posseder->addTypeNote($this);
         }
 
         return $this;
     }
 
-    public function removeNoteTotal(NoteTotal $noteTotal): self
+    public function removePosseder(Posseder $posseder): self
     {
-        $this->noteTotal->removeElement($noteTotal);
+        if ($this->posseders->removeElement($posseder)) {
+            $posseder->removeTypeNote($this);
+        }
 
         return $this;
     }
+
 }

@@ -24,9 +24,6 @@ class NoteTotal
     #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: user::class)]
     private Collection $user;
 
-    #[ORM\ManyToMany(targetEntity: TypeNote::class, mappedBy: 'noteTotal')]
-    private Collection $typeNotes;
-
     #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'noteTotal')]
     private Collection $penalites;
 
@@ -36,13 +33,16 @@ class NoteTotal
     #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: Cavalier::class)]
     private Collection $cavaliers;
 
+    #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'noteTotal')]
+    private Collection $posseders;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
-        $this->typeNotes = new ArrayCollection();
         $this->penalites = new ArrayCollection();
         $this->obstacles = new ArrayCollection();
         $this->cavaliers = new ArrayCollection();
+        $this->posseders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,33 +99,6 @@ class NoteTotal
             if ($user->getNoteTotal() === $this) {
                 $user->setNoteTotal(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TypeNote>
-     */
-    public function getTypeNotes(): Collection
-    {
-        return $this->typeNotes;
-    }
-
-    public function addTypeNote(TypeNote $typeNote): self
-    {
-        if (!$this->typeNotes->contains($typeNote)) {
-            $this->typeNotes->add($typeNote);
-            $typeNote->addNoteTotal($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTypeNote(TypeNote $typeNote): self
-    {
-        if ($this->typeNotes->removeElement($typeNote)) {
-            $typeNote->removeNoteTotal($this);
         }
 
         return $this;
@@ -213,6 +186,33 @@ class NoteTotal
             if ($cavalier->getNoteTotal() === $this) {
                 $cavalier->setNoteTotal(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Posseder>
+     */
+    public function getPosseders(): Collection
+    {
+        return $this->posseders;
+    }
+
+    public function addPosseder(Posseder $posseder): self
+    {
+        if (!$this->posseders->contains($posseder)) {
+            $this->posseders->add($posseder);
+            $posseder->addNoteTotal($this);
+        }
+
+        return $this;
+    }
+
+    public function removePosseder(Posseder $posseder): self
+    {
+        if ($this->posseders->removeElement($posseder)) {
+            $posseder->removeNoteTotal($this);
         }
 
         return $this;
