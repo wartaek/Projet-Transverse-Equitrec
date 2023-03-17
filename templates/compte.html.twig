@@ -34,6 +34,9 @@
 						</td>
 					</tr>
 				</tbody>
+				{% if is_granted('ROLE_ADMIN') %}
+					<a name="Dashboard"href="{{ path('admin') }}">DashboardAdmin</a>
+				{% endif %}
 			</table>
 		</div>
 	</main>
