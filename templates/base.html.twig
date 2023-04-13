@@ -12,7 +12,7 @@
     <title>{% block title %}Accueil Equitrec{% endblock %}</title>
     <nav>
         <a href="{{ path('accueil') }}"><img src="{{ asset('img/MonLogo.jpg') }}" alt="Accueil" style="width: 80px; height: 80px; border-radius: 50%;"></a>
-        <a {href="{{ path('competition') }}"}>Competition</a>
+        <a href="{{ path('competition') }}">Competition</a>
         <a {#href="{{ path('sport_select') }}"#}>Services</a>
         <a {#href="{{ path('sport_select') }}"#}>Contact</a>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}

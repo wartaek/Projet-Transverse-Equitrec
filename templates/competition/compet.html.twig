@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
+	{{ parent() }}
+{% endblock %}
+{% block title %}Competition{% endblock %}
+
+{% block content %}
+<section class="container my-3">
+<div name="competition">
+        <h1>La competition</h1>
+        Nom: {{ competition.nom }}
+        Date: {{ competition.date ? competition.date.format('Y-m-d H:i:s') : '' }}
+        Ville: {{ competition.ville }}
+        CP: {{ competition.cp }}
+        adresse: {{ competition.adresse }}
+</div>
+<div name="epreuve">
+    <h1>Liste des épreuves de la competition</h1>
+    <table>
+
+            <tr>
+                <th>Nom</th>
+                <th>Commentaires</th>
+            </tr>
+<tr>
+            {% for epreuve in epreuves %}
+                <tr>
+                    <td>{{ epreuve.nom }}</td>
+                    <td>{{ epreuve.commentaire }}</td>
+                </tr>
+            {% endfor %}
+</tr>
+    </table>
+</div>
+</section>
+{% endblock %}

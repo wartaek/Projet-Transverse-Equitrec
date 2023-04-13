@@ -21,28 +21,25 @@ class ObstacleController extends AbstractController
     public function selectObstacle(ObstacleRepository $obs): Response
     {
         $plans = $obs->findAll();
-        $aff = '';
 
-        foreach ($plans as $plan) {
-            $params = $plan->getParametrers();
+        // foreach ($plans as $plan) {
+        //     $params = $plan->getParametrers();
             
-            foreach ($params as $param) {//var_dump($param);
-                $aff .= 
-                    'Id : '.$plan->getId() . '<br>'
-                    . 'Nom : ' . $plan->getNom() . '<br>'
-                    . 'parametre : <br>' 
-                    .'&emsp;Hauteur : '. $param->getHauteur() . '<br>'
-                    .'&emsp;Largeur : '. $param->getLargeur() . '<br>'
-                    .'&emsp;Temps Max : '. $param->getTempsMax() . '<br>'
-                    .'&emsp;Pente : '. $param->getPente() . '<br>'
-                    . '<br>';
-            }
-        }
+        //     foreach ($params as $param) {//var_dump($param);
+        //         $aff .= 
+        //             'Id : '.$plan->getId() . '<br>'
+        //             . 'Nom : ' . $plan->getNom() . '<br>'
+        //             . 'parametre : <br>' 
+        //             .'&emsp;Hauteur : '. $param->getHauteur() . '<br>'
+        //             .'&emsp;Largeur : '. $param->getLargeur() . '<br>'
+        //             .'&emsp;Temps Max : '. $param->getTempsMax() . '<br>'
+        //             .'&emsp;Pente : '. $param->getPente() . '<br>'
+        //             . '<br>';
+        //     }
+        // }
 
-        return new Response(
-            '<html><body>
-                <p>Obstacles : <br>' . $aff . '</p>
-            </body></html>'
-        );
+        return $this->render('obstacle/index.html.twig', array(
+            'plans' => $plans
+        ));
     }
 }

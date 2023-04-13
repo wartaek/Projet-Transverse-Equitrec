@@ -31,10 +31,10 @@ class Competition
     #[ORM\Column(length: 50)]
     private ?string $adresse = null;
 
-    #[ORM\ManyToMany(targetEntity: cavalier::class, inversedBy: 'competitions')]
+    #[ORM\ManyToMany(targetEntity: Cavalier::class, inversedBy: 'competitions')]
     private Collection $cavalier;
 
-    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: user::class)]
+    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]
     private Collection $user;
 
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'competition')]

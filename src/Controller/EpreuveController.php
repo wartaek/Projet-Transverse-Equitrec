@@ -17,24 +17,13 @@ class EpreuveController extends AbstractController
         ]);
     }
 
-    #[Route('/epreuve/selectEpreuve')]
-    public function selectEpreuve(EpreuveRepository $epr): Response
+    #[Route('/epreuve/selectEpreuve', name:'epreuve')]
+    public function selectEpreuve(EpreuveRepository $epr ): Response
     {
         $plans = $epr->findAll();
-        $aff = '';
 
-            foreach ($plans as $plan) {//var_dump($plan);
-                $aff .= 
-                    'Id : '.$plan->getId() . '<br>'
-                    . 'Nom : ' . $plan->getNom() . '<br>'
-                    . 'Commentaire : ' . $plan->getCommentaire() . '<br>'
-                    . '<br>';
-            }
-
-        return new Response(
-            '<html><body>
-                <p>Epreuves : <br>' . $aff . '</p>
-            </body></html>'
-        );
+        return $this->render('epreuve/index.html.twig', array(
+            'plans' => $plans
+        ));
     }
 }
