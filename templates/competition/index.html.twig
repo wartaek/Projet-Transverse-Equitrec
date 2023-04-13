@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
+	{{ parent() }}
+{% endblock %}
+{% block title %}Competition{% endblock %}
+
+{% block content %}
+<section class="container my-3">
+	<div class="row">
+
+            <table>
+                    {% for key, value in tab %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+            </table>
+        </div>
+</section>
+{% endblock %}
