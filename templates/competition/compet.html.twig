@@ -1,37 +1,170 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
+{% block stylesheets %}
 	{{ parent() }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style type="text/css">
+		table {
+			width: auto;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
 {% endblock %}
-{% block title %}Competition{% endblock %}
+{% block title %}Competition
+{% endblock %}
 
 {% block content %}
-<section class="container my-3">
-<div name="competition">
-        <h1>La competition</h1>
-        Nom: {{ competition.nom }}
-        Date: {{ competition.date ? competition.date.format('Y-m-d H:i:s') : '' }}
-        Ville: {{ competition.ville }}
-        CP: {{ competition.cp }}
-        adresse: {{ competition.adresse }}
-</div>
-<div name="epreuve">
-    <h1>Liste des épreuves de la competition</h1>
-    <table>
+	{% for flash_message in app.session.flashbag.get('success') %}
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			{{ flash_message }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endfor %}
 
-            <tr>
-                <th>Nom</th>
-                <th>Commentaires</th>
-            </tr>
-<tr>
-            {% for epreuve in epreuves %}
-                <tr>
-                    <td>{{ epreuve.nom }}</td>
-                    <td>{{ epreuve.commentaire }}</td>
-                </tr>
-            {% endfor %}
-</tr>
-    </table>
-</div>
-</section>
+	<section class="container my-3">
+		<div name="competition">
+			<h1>La competition</h1>
+			<div style="display: flex; flex-direction: column;">
+				<p>
+					Nom :
+					{{ competition.nom }}
+				</p>
+
+				<p>
+					Date :
+					{{ competition.date ? competition.date.format('Y-m-d H:i:s') : '' }}
+				</p>
+
+				<p>
+					Ville :
+					{{ competition.ville }}
+				</p>
+
+				<p>
+					CP :
+					{{ competition.cp }}
+				</p>
+
+				<p>
+					Adresse :
+					{{ competition.adresse }}
+				</p>
+			</div>
+		</div>
+		<div name="epreuve">
+			<h1>Liste des épreuves de la competition</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Commentaires</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for epreuve in epreuves %}
+						<tr>
+							<td>{{ epreuve.nom }}</td>
+							<td>{{ epreuve.commentaire }}</td>
+							<td>
+								<a href="{{ path('removeEpreuveComp', {'id': epreuve.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
+									Supprimer l'epreuve de la competition
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<button id="add-epreuve-btn" class="btn btn-primary">Ajouter une epreuve à la compétition</button>
+
+			<form id="add-epreuve-form" method="post" action="{{ path('addEpreuveComp', {'idcomp': competition.id}) }}" style="display:none;">
+				<input type="text" name="epreuve_id">
+				<button type="submit">Ajouter</button>
+			</form>
+		</div>
+		<div name="cavalier">
+			<h1>Liste des cavaliers qui particie à cette competition</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>License</th>
+						<th>Dossard</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for cavalier in cavaliers %}
+						<tr>
+							<td>{{ cavalier.nom }}</td>
+							<td>{{ cavalier.prenom }}</td>
+							<td>{{ cavalier.license }}</td>
+							<td>{{ cavalier.dossard }}</td>
+							<td>
+								<a href="{{ path('removeCavalierComp', {'id': cavalier.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
+									Supprimer le cavalier de la competition
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<button id="add-cavalier-btn" class="btn btn-primary">Ajouter un cavalier à la compétition</button>
+
+			<form id="add-cavalier-form" method="post" action="{{ path('addCavalierComp', {'idcomp': competition.id}) }}" style="display:none;">
+				<input type="text" name="cavalier_id">
+				<button type="submit">Ajouter</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}
+{% block scripts %}
+	{{ parent() }}
+	<script>
+	  $(document).ready(function () {
+	    $("#add-cavalier-btn").click(function () {
+	      $("#add-cavalier-form").fadeIn();
+	    });
+	
+	    $('#add-cavalier-form button[type="submit"]').click(function () {
+	      $("#add-cavalier-form").fadeOut();
+	    });
+	  });
+	  $(document).ready(function () {
+	    $("#add-epreuve-btn").click(function () {
+	      $("#add-epreuve-form").fadeIn();
+	    });
+	
+	    $('#add-epreuve-form button[type="submit"]').click(function () {
+	      $("#add-epreuve-form").fadeOut();
+	    });
+	  });
+	  // ----------------------------------------------------------//
+	  $(document).ready(function () {
+	    $(".alert-success")
+	      .fadeTo(2000, 500)
+	      .slideUp(500, function () {
+	        $(".alert-success").slideUp(500);
+	      });
+	  });
+	</script>
 {% endblock %}

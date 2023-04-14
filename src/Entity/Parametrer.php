@@ -33,13 +33,13 @@ class Parametrer
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $informations = null;
 
-    #[ORM\ManyToMany(targetEntity: epreuve::class, inversedBy: 'parametrers')]
+    #[ORM\ManyToMany(targetEntity: Epreuve::class, inversedBy: 'parametrers')]
     private Collection $epreuve;
 
-    #[ORM\ManyToMany(targetEntity: niveau::class, inversedBy: 'parametrers')]
+    #[ORM\ManyToMany(targetEntity: Niveau::class, inversedBy: 'parametrers')]
     private Collection $niveau;
 
-    #[ORM\ManyToMany(targetEntity: obstacle::class, inversedBy: 'parametrers')]
+    #[ORM\ManyToMany(targetEntity: Obstacle::class, inversedBy: 'parametrers')]
     private Collection $obstacle;
 
     public function __construct()
@@ -134,7 +134,7 @@ class Parametrer
         return $this->epreuve;
     }
 
-    public function addEpreuve(epreuve $epreuve): self
+    public function addEpreuve(Epreuve $epreuve): self
     {
         if (!$this->epreuve->contains($epreuve)) {
             $this->epreuve->add($epreuve);
@@ -143,7 +143,7 @@ class Parametrer
         return $this;
     }
 
-    public function removeEpreuve(epreuve $epreuve): self
+    public function removeEpreuve(Epreuve $epreuve): self
     {
         $this->epreuve->removeElement($epreuve);
 
@@ -158,7 +158,7 @@ class Parametrer
         return $this->niveau;
     }
 
-    public function addNiveau(niveau $niveau): self
+    public function addNiveau(Niveau $niveau): self
     {
         if (!$this->niveau->contains($niveau)) {
             $this->niveau->add($niveau);
@@ -167,7 +167,7 @@ class Parametrer
         return $this;
     }
 
-    public function removeNiveau(niveau $niveau): self
+    public function removeNiveau(Niveau $niveau): self
     {
         $this->niveau->removeElement($niveau);
 
@@ -182,7 +182,7 @@ class Parametrer
         return $this->obstacle;
     }
 
-    public function addObstacle(obstacle $obstacle): self
+    public function addObstacle(Obstacle $obstacle): self
     {
         if (!$this->obstacle->contains($obstacle)) {
             $this->obstacle->add($obstacle);
@@ -191,7 +191,7 @@ class Parametrer
         return $this;
     }
 
-    public function removeObstacle(obstacle $obstacle): self
+    public function removeObstacle(Obstacle $obstacle): self
     {
         $this->obstacle->removeElement($obstacle);
 

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Cavalier;
 use App\Entity\Competition;
+use App\Entity\Epreuve;
 use App\Form\CompetitonType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,11 +40,12 @@ class CompetitionController extends AbstractController
     {
         $plans = $comp->find($id);
         $epr = $plans->getEpreuves();
-        //dd($epr);
+        $cav = $plans->getCavalier();
 
         return $this->render('competition/compet.html.twig', array(
-            'competition' => $plans, 
-            'epreuves' => $epr
+            'competition' => $plans,
+            'epreuves' => $epr,
+            'cavaliers' => $cav
         ));
     }
 
@@ -77,7 +80,7 @@ class CompetitionController extends AbstractController
             );
         }
         $form = $this->createForm(CompetitonType::class, $plans);
-        $form->handleRequest($request);        
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
@@ -103,5 +106,95 @@ class CompetitionController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Compétiton supprimée !');
         return new RedirectResponse($this->container->get('router')->generate('competition'));
+    }
+
+    #[Route('/competition/removeEpreuveComp/{id}/{idcomp}', name: 'removeEpreuveComp')]
+    public function removeEpreuveComp($id, $idcomp, EntityManagerInterface $em, CompetitionRepository $comp)
+    {
+        $epr = $em->getRepository(Epreuve::class)->find($id);
+        $plans = $comp->find($idcomp);
+        if (!$epr) {
+            throw $this->createNotFoundException(
+                `Aucune Epreuves trouvées` . $id
+            );
+        }
+        $plans->removeEpreuve($epr);
+        $em->flush();
+        $this->addFlash('success', 'Epreuve supprimée de la compétiton !');
+        return new RedirectResponse($this->container->get('router')->generate('compet', ['id' => $idcomp]));
+    }
+
+    #[Route('/competition/addEpreuveComp/{idcomp}', name: 'addEpreuveComp')]
+    public function addEpreuveComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
+    {
+        $epreuve = $em->getRepository(Epreuve::class)->find($request->get('epreuve_id'));
+        $competition = $comp->find($idcomp);
+
+        if (!$epreuve) {
+            $this->addFlash('error', 'Aucune épreuve trouvée avec cet ID');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        if (!$competition) {
+            $this->addFlash('error', 'Aucune compétition trouvée avec cet ID');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        if ($competition->getEpreuves()->contains($epreuve)) {
+            $this->addFlash('warning', 'Cette épreuve est déjà liée à la compétition');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        $competition->addEpreuve($epreuve);
+        $em->flush();
+
+        $this->addFlash('success', 'Épreuve ajoutée à la compétition !');
+
+        return $this->redirectToRoute('compet', ['id' => $idcomp]);
+    }
+
+
+    #[Route('/competition/removeCavalierComp/{id}/{idcomp}', name: 'removeCavalierComp')]
+    public function removeCavalierComp($id, $idcomp, EntityManagerInterface $em, CompetitionRepository $comp)
+    {
+        $epr = $em->getRepository(Cavalier::class)->find($id);
+        $plans = $comp->find($idcomp);
+        if (!$epr) {
+            throw $this->createNotFoundException(
+                `Aucun Cavalier trouvées` . $id
+            );
+        }
+        $plans->removeCavalier($epr);
+        $em->flush();
+        $this->addFlash('success', 'Cavalier supprimée de la compétiton !');
+        return new RedirectResponse($this->container->get('router')->generate('compet', ['id' => $idcomp]));
+    }
+
+    #[Route('/competition/addCavalierComp/{idcomp}', name: 'addCavalierComp')]
+    public function addCavalierComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
+    {
+        $cavalier = $em->getRepository(Cavalier::class)->find($request->get('cavalier_id'));
+        $competition = $comp->find($idcomp);
+        if (!$cavalier) {
+            $this->addFlash('error', 'Aucun cavalier trouvé avec cet ID');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        if (!$competition) {
+            $this->addFlash('error', 'Aucune compétition trouvée avec cet ID');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        if ($competition->getCavalier()->contains($cavalier)) {
+            $this->addFlash('warning', 'Ce cavalier est déjà liée à la compétition');
+            return $this->redirectToRoute('compet', ['id' => $idcomp]);
+        }
+
+        $competition->addCavalier($cavalier);
+        $em->flush();
+
+        $this->addFlash('success', 'Cavalier ajouté à la compétition !');
+
+        return $this->redirectToRoute('compet', ['id' => $idcomp]);
     }
 }

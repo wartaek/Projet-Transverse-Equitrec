@@ -21,7 +21,7 @@ class Epreuve
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\ManyToMany(targetEntity: competition::class, inversedBy: 'epreuves')]
+    #[ORM\ManyToMany(targetEntity: Competition::class, inversedBy: 'epreuves')]
     private Collection $competition;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'epreuve')]
@@ -74,7 +74,7 @@ class Epreuve
         return $this->competition;
     }
 
-    public function addCompetition(competition $competition): self
+    public function addCompetition(Competition $competition): self
     {
         if (!$this->competition->contains($competition)) {
             $this->competition->add($competition);
@@ -83,7 +83,7 @@ class Epreuve
         return $this;
     }
 
-    public function removeCompetition(competition $competition): self
+    public function removeCompetition(Competition $competition): self
     {
         $this->competition->removeElement($competition);
 

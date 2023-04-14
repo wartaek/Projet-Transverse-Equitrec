@@ -120,7 +120,7 @@ class Competition
         return $this->cavalier;
     }
 
-    public function addCavalier(cavalier $cavalier): self
+    public function addCavalier(Cavalier $cavalier): self
     {
         if (!$this->cavalier->contains($cavalier)) {
             $this->cavalier->add($cavalier);
@@ -129,7 +129,7 @@ class Competition
         return $this;
     }
 
-    public function removeCavalier(cavalier $cavalier): self
+    public function removeCavalier(Cavalier $cavalier): self
     {
         $this->cavalier->removeElement($cavalier);
 
@@ -144,7 +144,7 @@ class Competition
         return $this->user;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
             $this->user->add($user);
@@ -154,7 +154,7 @@ class Competition
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         if ($this->user->removeElement($user)) {
             // set the owning side to null (unless already changed)
@@ -174,20 +174,20 @@ class Competition
         return $this->epreuves;
     }
 
-    public function addEpreufe(Epreuve $epreufe): self
+    public function addEpreuve(Epreuve $epreuve): self
     {
-        if (!$this->epreuves->contains($epreufe)) {
-            $this->epreuves->add($epreufe);
-            $epreufe->addCompetition($this);
+        if (!$this->epreuves->contains($epreuve)) {
+            $this->epreuves->add($epreuve);
+            $epreuve->addCompetition($this);
         }
 
         return $this;
     }
 
-    public function removeEpreufe(Epreuve $epreufe): self
+    public function removeEpreuve(Epreuve $epreuve): self
     {
-        if ($this->epreuves->removeElement($epreufe)) {
-            $epreufe->removeCompetition($this);
+        if ($this->epreuves->removeElement($epreuve)) {
+            $epreuve->removeCompetition($this);
         }
 
         return $this;
