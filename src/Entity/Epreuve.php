@@ -21,7 +21,7 @@ class Epreuve
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\ManyToMany(targetEntity: competition::class, inversedBy: 'epreuves')]
+    #[ORM\ManyToMany(targetEntity: Competition::class, inversedBy: 'epreuve')]
     private Collection $competition;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'epreuve')]

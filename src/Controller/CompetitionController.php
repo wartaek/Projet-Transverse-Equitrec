@@ -40,7 +40,7 @@ class CompetitionController extends AbstractController
         $epr = $plans->getEpreuves();
         //dd($epr);
 
-        return $this->render('competition/compet.html.twig', array(
+        return $this->render('epreuve/index.html.twig', array(
             'competition' => $plans, 
             'epreuves' => $epr
         ));
