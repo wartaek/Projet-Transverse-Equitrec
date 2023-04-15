@@ -1,28 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
-	{{ parent() }}
-{% endblock %}
-{% block title %}Epreuves{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/inscription.css">
+            {{ parent() }}
+        {% endblock %}
+        {% block title %}
+            Epreuves
+        {% endblock %}
 
-{% block content %}
-<section class="container my-3">
-	<div class="row">
-
-            <table>
-                <tr>
-                    <td>Nom</td>
-                    <td>Commentaires</td>
-                </tr>
-                <tr>
-                    {% for value in plans %}
-                    <tr>
-                        <td>{{ value.nom }}</td>
-                        <td>{{ value.commentaire }}</td>
-                    </tr>
-                    {% endfor %}
-                </tr>
-            </table>
-        </div>
-</section>
-{% endblock %}
+        {% block content %}
+            <section class="container my-3">
+                <div name="competition">
+                    <h1>
+                        La competition
+                    </h1>
+                    Nom: 
+                    {{ competition.nom }}
+                    Date: 
+                    {{ competition.date ? competition.date.format('Y-m-d H:i:s') : '' }}
+                    Ville: 
+                    {{ competition.ville }}
+                    CP: 
+                    {{ competition.cp }}
+                    adresse: 
+                    {{ competition.adresse }}
+                </div>
+                <div class="row">
+                    <table>
+                        <tr>
+                            <th>
+                                Nom                        
+                                                            
+                            </th>
+                            <th>
+                                Commentaires                       
+                                                            
+                            </th>
+                        </tr>
+                        <tr>
+                            {% for value in epreuves %}
+                                <tr>
+                                    <td>
+                                        {{ value.nom }}
+                                    </td>
+                                    <td>
+                                        {{ value.commentaire }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('epreuve', {'id': value.id}) }}" class="btn btn-primary">
+                                            Acceder à l'épreuve
+                                                                                    
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('changerEpreuve', {'id': value.id}) }}" class="btn btn-warning">
+                                            Changer l'épreuve
+                                                                                    
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('deleteEpreuve', {'id': value.id}) }}" class="btn btn-danger">
+                                            Supprimé l'épreuve
+                                                                                    
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                    <a href="{{ path('newEpreuve') }}" class="btn btn-success">
+                        Créer une épreuve
+                                            
+                    </a>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">
+                                Bien joué!
+                                                            
+                            </h4>
+                            <p>
+                                Epreuves créée avec succès 
+                                                            
+                            </p>
+                            <hr>
+                                <p class="mb-0">
+                                    Vous pourrez maintenant avoir accès au contenu de notre site quand vous le voulez.
+                                                                    
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endblock %}
+            
