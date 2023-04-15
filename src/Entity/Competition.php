@@ -34,7 +34,7 @@ class Competition
     #[ORM\ManyToMany(targetEntity: cavalier::class, inversedBy: 'competitions')]
     private Collection $cavalier;
 
-    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: user::class)]
+    #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]
     private Collection $user;
 
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'competition')]
@@ -144,7 +144,7 @@ class Competition
         return $this->user;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
             $this->user->add($user);
@@ -154,7 +154,7 @@ class Competition
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         if ($this->user->removeElement($user)) {
             // set the owning side to null (unless already changed)

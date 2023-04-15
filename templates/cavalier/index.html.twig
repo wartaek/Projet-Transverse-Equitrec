@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	{{ parent() }}
+{% endblock %}
+
+{% block title %}
+	EQUITREC - Cavaliers
+{% endblock %}
+
+{% block content %}
+	<main>
+		<section class="container my-3">
+			<div class="row">
+				<div class="col">
+					<form action="{{ path('new_cavalier') }}" method="POST">
+						<h2 style="text-align:center;">Création des cavaliers</h2>
+						<p style="color:{{color}};">{{message}}</p>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" style="width: 5em">Nom</span>
+							</div>
+							<input type="text" class="form-control" name="nom" placeholder="Saisir le nom du cavalier" maxlength="50">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" style="width: 5em">Prénom</span>
+							</div>
+							<input type="text" class="form-control" name="prenom" placeholder="Saisir le prénom du cavalier" maxlength="50">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" style="width: 5em">Licence</span>
+							</div>
+							<input type="tel" class="form-control" name="licence" placeholder="Saisir le numéro de licence du cavalier" pattern="[0-9]" maxlength="11" >
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" style="width: 5em">Dossard</span>
+							</div>
+							<input type="text" class="form-control" name="dossard" placeholder="Saisir le numéro de dossard du cavalier" maxlength="50">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" style="width: 5em">Niveau</span>
+							</div>
+							<select class="form-control" name="niveau">
+								<option disabled selected>Choisissez le niveau du cavalier</option>
+								<option>Club Poney 2</option>
+								<option>Club 1</option>
+								<option>Club Elite</option>
+								<option>Amateur 3</option>
+								<option>Amateur 2</option>
+								<option>Amateur 1</option>
+								<option>Amateur Elite</option>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-success">Enregistrer le cavalier</button>
+					</form>
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

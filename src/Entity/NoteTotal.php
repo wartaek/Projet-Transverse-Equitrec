@@ -21,7 +21,7 @@ class NoteTotal
     #[ORM\Column(length: 250, nullable: true)]
     private ?string $observation = null;
 
-    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: user::class)]
+    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: User::class)]
     private Collection $user;
 
     #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'noteTotal')]
@@ -82,7 +82,7 @@ class NoteTotal
         return $this->user;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
             $this->user->add($user);
@@ -92,7 +92,7 @@ class NoteTotal
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         if ($this->user->removeElement($user)) {
             // set the owning side to null (unless already changed)
