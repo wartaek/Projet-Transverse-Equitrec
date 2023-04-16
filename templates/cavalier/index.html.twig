@@ -20,32 +20,32 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Nom</span>
 							</div>
-							<input type="text" class="form-control" name="nom" placeholder="Saisir le nom du cavalier" maxlength="50">
+							<input type="text" class="form-control" name="nom" placeholder="Saisir le nom du cavalier" maxlength="50" required>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Prénom</span>
 							</div>
-							<input type="text" class="form-control" name="prenom" placeholder="Saisir le prénom du cavalier" maxlength="50">
+							<input type="text" class="form-control" name="prenom" placeholder="Saisir le prénom du cavalier" maxlength="50" required>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Licence</span>
 							</div>
-							<input type="tel" class="form-control" name="licence" placeholder="Saisir le numéro de licence du cavalier" pattern="[0-9]+" maxlength="10" >
+							<input type="tel" class="form-control" name="licence" placeholder="Saisir le numéro de licence du cavalier" pattern="[0-9]+" maxlength="10" required>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Dossard</span>
 							</div>
-							<input type="text" class="form-control" name="dossard" placeholder="Saisir le numéro de dossard du cavalier" maxlength="50">
+							<input type="text" class="form-control" name="dossard" placeholder="Saisir le numéro de dossard du cavalier" maxlength="50" required>
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Niveau</span>
 							</div>
-							<select class="form-control" name="niveau">
-								<option disabled selected>Choisissez le niveau du cavalier</option>
+							<select class="form-control" name="niveau" required>
+								<option disabled selected hidden>Choisissez le niveau du cavalier</option>
 								<option>Club Poney 2</option>
 								<option>Club 1</option>
 								<option>Club Elite</option>
