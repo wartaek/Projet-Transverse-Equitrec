@@ -109,7 +109,7 @@ class CompetitionController extends AbstractController
         }
         $em->remove($comp);
         $em->flush();
-        $this->addFlash('success', 'Compétiton supprimée !');
+        $this->addFlash('danger', 'Compétiton supprimée !');
         return new RedirectResponse($this->container->get('router')->generate('competition'));
     }
 
@@ -125,7 +125,7 @@ class CompetitionController extends AbstractController
         }
         $plans->removeEpreuve($epr);
         $em->flush();
-        $this->addFlash('success', 'Epreuve supprimée de la compétiton !');
+        $this->addFlash('danger', 'Epreuve supprimée de la compétiton !');
         return new RedirectResponse($this->container->get('router')->generate('compet', ['id' => $idcomp]));
     }
 
@@ -137,12 +137,12 @@ class CompetitionController extends AbstractController
         $competition = $comp->find($idcomp);
 
         if (!$epreuve) {
-            $this->addFlash('error', 'Aucune épreuve trouvée avec cet ID');
+            $this->addFlash('warning', 'Aucune épreuve trouvée avec cet nom');
             return $this->redirectToRoute('compet', ['id' => $idcomp]);
         }
 
         if (!$competition) {
-            $this->addFlash('error', 'Aucune compétition trouvée avec cet ID');
+            $this->addFlash('warning', 'Aucune compétition trouvée avec cet nom');
             return $this->redirectToRoute('compet', ['id' => $idcomp]);
         }
 
@@ -172,22 +172,22 @@ class CompetitionController extends AbstractController
         }
         $plans->removeCavalier($epr);
         $em->flush();
-        $this->addFlash('success', 'Cavalier supprimée de la compétiton !');
+        $this->addFlash('danger', 'Cavalier supprimée de la compétiton !');
         return new RedirectResponse($this->container->get('router')->generate('compet', ['id' => $idcomp]));
     }
 
     #[Route('/competition/addCavalierComp/{idcomp}', name: 'addCavalierComp')]
     public function addCavalierComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
     {
-        $cavalier = $em->getRepository(Cavalier::class)->find($request->get('cavalier_id'));
+        $cavalier = $em->getRepository(Cavalier::class)->findOneBy(['nom' => $request->get('cavalier_id')]);
         $competition = $comp->find($idcomp);
         if (!$cavalier) {
-            $this->addFlash('error', 'Aucun cavalier trouvé avec cet ID');
+            $this->addFlash('warning', 'Aucun cavalier trouvé avec ce nom');
             return $this->redirectToRoute('compet', ['id' => $idcomp]);
         }
 
         if (!$competition) {
-            $this->addFlash('error', 'Aucune compétition trouvée avec cet ID');
+            $this->addFlash('warning', 'Aucune compétition trouvée avec ce nom');
             return $this->redirectToRoute('compet', ['id' => $idcomp]);
         }
 
@@ -229,7 +229,7 @@ class CompetitionController extends AbstractController
         }
         $plans->removeObstacle($obs);
         $em->flush();
-        $this->addFlash('success', 'Obstacle supprimée de l`épreuve !');
+        $this->addFlash('danger', 'Obstacle supprimée de l`épreuve !');
         return new RedirectResponse($this->container->get('router')->generate('epreuve', ['id' => $idepr]));
     }
 
@@ -240,12 +240,12 @@ class CompetitionController extends AbstractController
         $obstacle = $em->getRepository(Obstacle::class)->findOneBy(['nom' => $request->get('obstacle_nom')]);
         $epreuve = $epr->find($idepr);//dd($obstacle);
         if (!$obstacle) {
-            $this->addFlash('error', 'Aucun obstacle trouvé avec ce nom');
+            $this->addFlash('warning', 'Aucun obstacle trouvé avec ce nom');
             return $this->redirectToRoute('epreuve', ['id' => $idepr]);
         }
 
         if (!$epreuve) {
-            $this->addFlash('error', 'Aucune épreuve trouvée avec ce nom');
+            $this->addFlash('warning', 'Aucune épreuve trouvée avec ce nom');
             return $this->redirectToRoute('epreuve', ['id' => $idepr]);
         }//dd($epreuve->getObstacle());
 

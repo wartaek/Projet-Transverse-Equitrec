@@ -30,20 +30,19 @@
 {% endblock %}
 
 {% block content %}
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success" role="alert">
-			<h4 class="alert-heading">
-				Bien joué!
-			</h4>
-			<p>
-				Compétition créée avec succès
-			</p>
-			<hr>
-			<p class="mb-0">
-				Vous pourrez maintenant avoir accès au contenu de notre site quand vous le voulez.
-			</p>
-		</div>
-	{% endfor %}
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+        <script>
+            setTimeout(function() {
+                document.querySelector('.alert').remove();
+            }, 2000);
+        </script>
+    {% endfor %}
+{% endfor %}
+
 	<section class="container my-3">
 		<div class="row">
 			<table>
