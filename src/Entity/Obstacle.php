@@ -27,17 +27,10 @@ class Obstacle
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
 
-    #[ORM\OneToMany(targetEntity: Penalite::class, mappedBy: 'idObstacle')]
-    private Collection $idPenalite;
-
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
         $this->epreuves = new ArrayCollection();
-
-    public function __construct()
-    {
-        $this->parametrers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +89,7 @@ class Obstacle
         return $this;
     }
 
+    /**
      * @return Collection<int, Epreuve>
      */
     public function getEpreuves(): Collection
@@ -126,5 +120,4 @@ class Obstacle
     {
         return $this->nom;
     }
-
 }

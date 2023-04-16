@@ -81,73 +81,9 @@ class Penalite
 
         return $this;
     }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
     public function __toString()
     {
         return $this->libellePenalite;
-=======
-    public function getVal(): ?int
-    {
-        return $this->val;
     }
-
-    public function setVal(?int $val): self
-    {
-        $this->val = $val;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, obstacle>
-     */
-    public function getIdObstacle(): Collection
-    {
-        return $this->idObstacle;
-    }
-
-    public function addIdObstacle(obstacle $idObstacle): self
-    {
-        if (!$this->idObstacle->contains($idObstacle)) {
-            $this->idObstacle->add($idObstacle);
-        }
-
-        return $this;
-    }
-
-    public function removeIdObstacle(obstacle $idObstacle): self
-    {
-        $this->idObstacle->removeElement($idObstacle);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, cavalier>
-     */
-    public function getIdCavalier(): Collection
-    {
-        return $this->idCavalier;
-    }
-
-    public function addIdCavalier(cavalier $idCavalier): self
-    {
-        if (!$this->idCavalier->contains($idCavalier)) {
-            $this->idCavalier->add($idCavalier);
-        }
-
-        return $this;
-    }
-
-    public function removeIdCavalier(cavalier $idCavalier): self
-    {
-        $this->idCavalier->removeElement($idCavalier);
-
-        return $this;
->>>>>>> f3c5660 (push before rebase)
-    }
-=======
->>>>>>> 4ce9a68 (Revert "push before rebase")
 }

@@ -21,7 +21,7 @@ class NoteTotal
     #[ORM\Column(length: 250, nullable: true)]
     private ?string $observation = null;
 
-    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: user::class)]
+    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: User::class)]
     private Collection $user;
 
     #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'noteTotal')]

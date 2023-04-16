@@ -71,38 +71,8 @@ class TypeNote
         return $this;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public function __toString()
     {
         return $this->libelleTypeNote;
     }
-=======
-    /**
-     * @return Collection<int, NoteTotal>
-     */
-    public function getIdNote(): Collection
-    {
-        return $this->idNote;
-    }
-
-    public function addIdNote(NoteTotal $idNote): self
-    {
-        if (!$this->idNote->contains($idNote)) {
-            $this->idNote->add($idNote);
-        }
-
-        return $this;
-    }
-
-    public function removeIdNote(NoteTotal $idNote): self
-    {
-        $this->idNote->removeElement($idNote);
-
-        return $this;
-    }
-
->>>>>>> f3c5660 (push before rebase)
-=======
->>>>>>> 4ce9a68 (Revert "push before rebase")
 }

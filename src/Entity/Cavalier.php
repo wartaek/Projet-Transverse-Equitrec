@@ -163,40 +163,9 @@ class Cavalier
 
         return $this;
     }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
     public function __toString()
     {
         return $this->nom;
-=======
-    /**
-     * @return Collection<int, Penalite>
-     */
-    public function getIdPenalite(): Collection
-    {
-        return $this->idPenalite;
     }
-
-    public function addIdPenalite(Penalite $idPenalite): self
-    {
-        if (!$this->idPenalite->contains($idPenalite)) {
-            $this->idPenalite->add($idPenalite);
-            $idPenalite->addIdCavalier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdPenalite(Penalite $idPenalite): self
-    {
-        if ($this->idPenalite->removeElement($idPenalite)) {
-            $idPenalite->removeIdCavalier($this);
-        }
-
-        return $this;
->>>>>>> f3c5660 (push before rebase)
-    }
-=======
->>>>>>> 4ce9a68 (Revert "push before rebase")
 }
