@@ -15,7 +15,7 @@ class Penalite
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $libellePenalite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -24,9 +24,20 @@ class Penalite
     #[ORM\ManyToMany(targetEntity: NoteTotal::class, inversedBy: 'penalites')]
     private Collection $noteTotal;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $val = null;
+
+    #[ORM\ManyToOne(targetEntity: obstacle::class, inversedBy: 'idPenalite')]
+    private Collection $idObstacle;
+
+    #[ORM\ManyToOne(targetEntity: cavalier::class, inversedBy: 'idPenalite')]
+    private Collection $idCavalier;
+
     public function __construct()
     {
         $this->noteTotal = new ArrayCollection();
+        $this->idObstacle = new ArrayCollection();
+        $this->idCavalier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,8 +93,69 @@ class Penalite
         return $this;
     }
 
+<<<<<<< HEAD
     public function __toString()
     {
         return $this->libellePenalite;
+=======
+    public function getVal(): ?int
+    {
+        return $this->val;
+    }
+
+    public function setVal(?int $val): self
+    {
+        $this->val = $val;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, obstacle>
+     */
+    public function getIdObstacle(): Collection
+    {
+        return $this->idObstacle;
+    }
+
+    public function addIdObstacle(obstacle $idObstacle): self
+    {
+        if (!$this->idObstacle->contains($idObstacle)) {
+            $this->idObstacle->add($idObstacle);
+        }
+
+        return $this;
+    }
+
+    public function removeIdObstacle(obstacle $idObstacle): self
+    {
+        $this->idObstacle->removeElement($idObstacle);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, cavalier>
+     */
+    public function getIdCavalier(): Collection
+    {
+        return $this->idCavalier;
+    }
+
+    public function addIdCavalier(cavalier $idCavalier): self
+    {
+        if (!$this->idCavalier->contains($idCavalier)) {
+            $this->idCavalier->add($idCavalier);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCavalier(cavalier $idCavalier): self
+    {
+        $this->idCavalier->removeElement($idCavalier);
+
+        return $this;
+>>>>>>> f3c5660 (push before rebase)
     }
 }

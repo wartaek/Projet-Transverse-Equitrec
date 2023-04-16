@@ -21,9 +21,13 @@ class TypeNote
     #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'typeNote')]
     private Collection $posseders;
 
+    #[ORM\OneToMany(targetEntity: NoteTotal::class, mappedBy: 'idTypeNote')]
+    private Collection $idNote;
+
     public function __construct()
     {
         $this->posseders = new ArrayCollection();
+        $this->idNote = new ArrayCollection();
     }
 
 
@@ -71,8 +75,35 @@ class TypeNote
         return $this;
     }
 
+<<<<<<< HEAD
     public function __toString()
     {
         return $this->libelleTypeNote;
     }
+=======
+    /**
+     * @return Collection<int, NoteTotal>
+     */
+    public function getIdNote(): Collection
+    {
+        return $this->idNote;
+    }
+
+    public function addIdNote(NoteTotal $idNote): self
+    {
+        if (!$this->idNote->contains($idNote)) {
+            $this->idNote->add($idNote);
+        }
+
+        return $this;
+    }
+
+    public function removeIdNote(NoteTotal $idNote): self
+    {
+        $this->idNote->removeElement($idNote);
+
+        return $this;
+    }
+
+>>>>>>> f3c5660 (push before rebase)
 }
