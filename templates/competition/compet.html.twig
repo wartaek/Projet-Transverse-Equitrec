@@ -29,19 +29,18 @@
 
 {% endblock %}
 {% block content %}
-{% for type, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
-            {{ message }}
-        </div>
-        <script>
-            setTimeout(function() {
-                document.querySelector('.alert').remove();
-            }, 2000);
-        </script>
-    {% endfor %}
-{% endfor %}
-
+	{% for type, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+				{{ message }}
+			</div>
+			<script>
+				setTimeout(function () {
+document.querySelector('.alert').remove();
+}, 2000);
+			</script>
+		{% endfor %}
+	{% endfor %}
 
 
 	<section class="container my-3">
@@ -110,18 +109,22 @@
 								</a>
 							</td>
 							<td>
-								<a href="{{ path('removeEpreuveComp', {'id': epreuve.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
-									Supprimer l'epreuve de la competition
-								</a>
+								{% if is_granted('ROLE_USER') %}
+									<a href="{{ path('removeEpreuveComp', {'id': epreuve.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
+										Supprimer l'epreuve de la competition
+									</a>
+								{% endif %}
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 			<br>
-			<button id="add-epreuve-btn" class="btn btn-primary">
-				Ajouter une epreuve à la compétition(entrer le nom)
-			</button>
+			{% if is_granted('ROLE_USER') %}
+				<button id="add-epreuve-btn" class="btn btn-primary">
+					Ajouter une epreuve à la compétition(entrer le nom)
+				</button>
+			{% endif %}
 			<form
 				id="add-epreuve-form" method="post" action="{{ path('addEpreuveComp', {'idcomp': competition.id}) }}" style="display:none;">
 				{# <input type="text" name="epreuve_id"> #}
@@ -171,19 +174,23 @@
 								{{ cavalier.dossard }}
 							</td>
 							<td>
-								<a href="{{ path('removeCavalierComp', {'id': cavalier.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
-									Supprimer le cavalier de la competition
+								{% if is_granted('ROLE_USER') %}
+									<a href="{{ path('removeCavalierComp', {'id': cavalier.id, 'idcomp': competition.id}) }}" class="btn btn-danger">
+										Supprimer le cavalier de la competition
 
-								</a>
+									</a>
+								{% endif %}
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 			<br>
-			<button id="add-cavalier-btn" class="btn btn-primary">
-				Ajouter un cavalier à la compétition(entrer le nom)
-			</button>
+			{% if is_granted('ROLE_USER') %}
+				<button id="add-cavalier-btn" class="btn btn-primary">
+					Ajouter un cavalier à la compétition(entrer le nom)
+				</button>
+			{% endif %}
 			<form id="add-cavalier-form" method="post" action="{{ path('addCavalierComp', {'idcomp': competition.id}) }}" style="display:none;">
 				<input type="text" name="cavalier_id">
 				<button type="submit">
