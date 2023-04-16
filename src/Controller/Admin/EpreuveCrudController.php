@@ -24,6 +24,7 @@ class EpreuveCrudController extends AbstractCrudController
             AssociationField::new('competition'),
             AssociationField::new('categories'),
             AssociationField::new('parametrers'),
+            AssociationField::new('obstacle'),
         ];
     }
 }

@@ -22,6 +22,7 @@ class ObstacleCrudController extends AbstractCrudController
             TextField::new('nom'),
             AssociationField::new('noteTotal'),
             AssociationField::new('parametrers'),
+            AssociationField::new('epreuves'),
         ];
     }
 }
