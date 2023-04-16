@@ -1,7 +1,7 @@
 INSERT INTO `competition` (`id`, `nom`, `date`, `ville`, `cp`, `adresse`) VALUES (1, 'Equitest', '2023-04-17', 'Lyon 8e', '69008', 'rue du test');
 INSERT INTO `competition` (`id`, `nom`, `date`, `ville`, `cp`, `adresse`) VALUES (2, 'Equitrou', '2023-05-17', 'Lyon 5e', '69005', 'rue du test bis');
 
-INSERT INTO `epreuve` (`id`, `nom`, `commentaire`) VALUES ('1', 'POR', 'Parcours d’Orientation et de Régularité');
+INSERT INTO `epreuve` (`id`, `nom`, `commentaire`) VALUES ('1', 'POR', 'POR');
 INSERT INTO `epreuve` (`id`, `nom`, `commentaire`) VALUES ('2', 'PTV', 'Parcours en Terrain Varié');
 INSERT INTO `epreuve` (`id`, `nom`, `commentaire`) VALUES ('3', 'MA', 'Maîtrise des Allures');
 
