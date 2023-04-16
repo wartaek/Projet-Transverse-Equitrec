@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+            {{ parent() }}
+	<link rel="stylesheet" href="/css/accueil.css">
+    <style type="text/css">
+        table {
+            width: auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Résultats{% endblock %}
+
+{% block content %}
+    <h1>Résultats</h1>
+    <table>
+        <tr><th>Dossard</th><th>Total</th></tr>
+        {% for dossard, total in resultats %}
+            <tr><td>{{ dossard }}</td><td>{{ total }}</td></tr>
+        {% endfor %}
+    </table>
+    <br>
+    <input type="button" onclick="location.href='{{ path('app_note_obstacles') }}';" value="Afficher les notes de la compétition" />
+{% endblock %}

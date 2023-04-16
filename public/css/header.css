@@ -22,8 +22,10 @@ nav a {
 
 nav a:hover {
   background-color: #ededed;
+  text-decoration: none;
 }
 
 body {
-    padding-top: 100px;
+  padding-top: 100px;
+  background-color: #adb5bd;
 }

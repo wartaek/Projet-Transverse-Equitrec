@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <h1>Résultats de la compétition</h1>
+
+    <table>
+    <thead>
+        <tr>
+            <th>Dossard</th>
+            <th>Contrat</th>
+            <th>Style</th>
+            <th>Allures</th>
+            <th>Pénalité</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+            <tr>
+                <td>{{ item.dossard }}</td>
+                {% set contrat = '' %}
+                {% set style = '' %}
+                {% set allures = '' %}
+                {% set penalite = '' %}
+                {% for note in item.notes %}
+                    {% if note.Libelle_Type_Note == 'Contrat' %}
+                        {% set contrat = note.Val[0] %}
+                    {% elseif note.Libelle_Type_Note == 'Style' %}
+                        {% set style = note.Val[0] %}
+                    {% elseif note.Libelle_Type_Note == 'Allures' %}
+                        {% set allures = note.Val[0] %}
+                    {% elseif note.Pénalité is defined %}
+                        {% set penalite = note.Pénalité[0] %}
+                    {% endif %}
+                {% endfor %}
+                <td>{{ contrat }}</td>
+                <td>{{ style }}</td>
+                <td>{{ allures }}</td>
+                <td>{{ penalite }}</td>
+                <td>{{ totals[item.dossard] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+

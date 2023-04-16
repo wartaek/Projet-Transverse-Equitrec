@@ -39,6 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $register_date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'User')]
+    private ?NoteTotal $noteTotal = null;
+
+    #[ORM\ManyToOne(inversedBy: 'User')]
+    private ?Competition $competition = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,5 +149,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->register_date = $register_date;
 
         return $this;
+    }
+
+    public function getNoteTotal(): ?NoteTotal
+    {
+        return $this->noteTotal;
+    }
+
+    public function setNoteTotal(?NoteTotal $noteTotal): self
+    {
+        $this->noteTotal = $noteTotal;
+
+        return $this;
+    }
+
+    public function getCompetition(): ?Competition
+    {
+        return $this->competition;
+    }
+
+    public function setCompetition(?Competition $competition): self
+    {
+        $this->competition = $competition;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

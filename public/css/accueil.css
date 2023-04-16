@@ -1,5 +1,20 @@
-content {
-    background-image: url('img/Back.jpg');
-    background-size: cover;
-    background-position: center;
+body {
+  background-image: url("/img/Back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 90%;
+  height: 100%;
+}
+
+#menu {
+  background-color: #000000c2;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  width: 500px;
+  margin-top: 200px;
+  margin-left: 500px;
+  padding: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+
 }

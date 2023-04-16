@@ -2,6 +2,22 @@
 
 {% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
 	{{ parent() }}
+	<style>
+		a[name="Dashboard"] {
+			position : absolute;
+			background-color: #4CAF50; /* couleur de fond */
+			color: white; /* couleur du texte */
+			padding: 12px 24px; /* espacement du texte par rapport au bord du bouton */
+			border-radius: 4px; /* coins arrondis */
+			text-decoration: none; /* enlever le soulignement du lien */
+			display: inline-block; /* afficher en bloc */
+			transition: background-color 0.3s ease; /* transition sur la couleur de fond lors du survol */
+		}
+
+		a[name="Dashboard"]:hover {
+			background-color: #3e8e41; /* couleur de fond au survol */
+		}
+	</style>
 {% endblock %}
 {% block title %}
 	{{ user.name }}
@@ -34,213 +50,11 @@
 						</td>
 					</tr>
 				</tbody>
+				{% if is_granted('ROLE_ADMIN') %}
+					<a name="Dashboard" href="{{ path('admin') }}">DashboardAdmin</a>
+				{% endif %}
 			</table>
 		</div>
 	</main>
 {% endblock %}
-{% block scripts %}
-<script>
-{# 
-Exercice 1
-let admin;
-let name = "John";
-admin = name;
-console.log(admin);
 
-Exercice 2
-0                   integer 
-false               boolean     
-4 - 3.2             float        
-'bonjour'           string     
-'hello' + 8         string        
-{ a: 1.6 }          objet    
-[ 'a', 'b', 'c' ]   tableau
-
-Exercice 3
-let a = 1;
-let b = 1;
-let c = ++a;
-let d = b++;
-console.log(a);
-console.log(b);
-console.log(c);
-console.log(d);
-a vaut 2, b vaut 2, c vaut 2, d vaut 1.
-
-Exercice 4
-let tableau = [1, 2, 3, 4, 5, 6];
-tableau.splice(3,1,4);
-console.log(tableau.length);
-la longueur du tableau est 6 
-
-Exercice 5
-let eleve = { prenom: "John", nom: "Doe", note: 16, diplomes: ["Master", "Licence"] };
-console.log(eleve);
-
-Exercice 6
-console.log(9 > 8);					    true
-console.log("apple" > "pineapple");		false			
-console.log("2" > "12");				true	
-console.log(undefined == null);			true		
-console.log(undefined === null);		false			
-console.log(1 == '1');					true
-console.log(1 === '1');					false
-
-Exercice 7
-console.log(null || 2 || undefined );       2
-console.log(1 && null && 2);                null
-
-Exercice 8
-if ("false") {
-console.log( 'Hello' );
-}
-console.log('World');
-
-Exercice 9
-Le resultat affiché est Hello World
-const resultat = 6 > 7 ? 'Oui' : 'Non';
-console.log(resultat);
-Le resultat affiché est Non
-
-Exercice 10
-Réécrivez le code ci-dessous en utilisant une seule instruction switch :
-let a = 2;
-
-switch (a) {
-  case 0:
-    console.log("0");
-    break;
-  case 1:
-    console.log("1");
-    break;
-  case 2 || 3:
-    console.log("2,3");
-    break;
-}
-
-Exercice 11
-let str = 1;
-
-for (str ; str <= 10; str++) {
-  if(str%2 == 0){
-	console.log(str);
-  }
-}
-
-Exercice 12
-let i = 1;
-let somme = 0;
-while (i <= 10) {
-  somme += i;
-  i++;
-}
-console.log("La somme est : " + somme);
-Exercice 13
-const object = {
-  jour: "Lundi 20",
-  mois: "Février",
-  annee: 2023,
-  estBissextile: false
-};
-
-for (let propriete in object) {
-  console.log(propriete + " : " + object[propriete]);
-}
-
-Exercice 14
-const liste_course = ['fruits', 'yaourts', 'viandes', 'bières', 'pain'];
-
-for (let propriete of liste_course) {
-  console.log(propriete);
-}
-
-Exercice 15
-function temp(min){
-	result = min * 60;
-	console.log(result);
-}
-console.log(temp(5));
-
-Exercice 16
-let temp=(min)=>{
-	result = min * 60;
-	console.log(result);
-}
-console.log(temp(5));
-
-Exercice 17
-function minMax(tableau){
-	console.log(Math.min(...tableau));
-	console.log(Math.max(...tableau));
-}
-let tableau = [1, 2, 3, 4, 5, 6];
-console.log(minMax(tableau));
-
-Exercice 18
-function repete(string){
-	let result = "";
-	for(let i=0; i<string.length;i++){
-		result += string[i]+string[i];
-	}
-	console.log(result);
-}
-string="test";
-console.log(repete(string));
-
-Exercice 19
-try {
-console.log('try');
-} catch (err) {
-console.log('catch');
-} finally {
-console.log('finally');
-}
-Seulement le console.log du catch n'est pas retourné
-
-Exercice 20
-try {
-throw new Error('erreur');
-console.log('try');
-} catch (err) {
-console.log('catch');
-} finally {
-console.log('finally');
-}
-Cette fois-ci seulement le console.log du try n'est pas retourné
-
-Exercice 21
-
-function tablesMultiplication(n){
-tab = [];
-}
-tablesMultiplication(3);
-tablesMultiplication(5);
-
-Exercice 22
-function voyelle(n){
-	for(let i=0; i<n.length;i++){
-		if(n[i]=="a"){
-			console.log("il y a un a")
-		}
-		if(n[i]=="e"){
-			console.log("il y a un e")
-		}
-		if(n[i]=="i"){
-			console.log("il y a un i")
-		}
-		if(n[i]=="o"){
-			console.log("il y a un o")
-		}
-		if(n[i]=="u"){
-			console.log("il y a un u")
-		}
-		if(n[i]=="y"){
-			console.log("il y a un y")
-		}
-	}
-}
-string="test";
-voyelle(string);
-#}
-</script>
-{% endblock %}
