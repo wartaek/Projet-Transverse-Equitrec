@@ -11,8 +11,19 @@ class ObstacleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('field_name')
-        ;
+        ->add('nom', TextType::class, [
+            'required' => true,
+            'label' => 'Nom:',
+            'attr' => array(
+                'class' => "form-control"
+            )
+        ])
+        ->add('save', SubmitType::class, array(
+            'label' => 'Valider',
+            'attr' => array(
+                'class' => 'btn btn-success'
+            )
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -30,11 +30,15 @@ class Epreuve
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'epreuve')]
     private Collection $parametrers;
 
+    #[ORM\ManyToMany(targetEntity: Obstacle::class, inversedBy: 'epreuves')]
+    private Collection $obstacle;
+
     public function __construct()
     {
         $this->competition = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->parametrers = new ArrayCollection();
+        $this->obstacle = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +144,30 @@ class Epreuve
         if ($this->parametrers->removeElement($parametrer)) {
             $parametrer->removeEpreuve($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Obstacle>
+     */
+    public function getObstacle(): Collection
+    {
+        return $this->obstacle;
+    }
+
+    public function addObstacle(Obstacle $obstacle): self
+    {
+        if (!$this->obstacle->contains($obstacle)) {
+            $this->obstacle->add($obstacle);
+        }
+
+        return $this;
+    }
+
+    public function removeObstacle(Obstacle $obstacle): self
+    {
+        $this->obstacle->removeElement($obstacle);
 
         return $this;
     }
