@@ -21,7 +21,7 @@ class Epreuve
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\ManyToMany(targetEntity: competition::class, inversedBy: 'epreuves')]
+    #[ORM\ManyToMany(targetEntity: Competition::class, inversedBy: 'epreuves')]
     private Collection $competition;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'epreuve')]
@@ -30,11 +30,15 @@ class Epreuve
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'epreuve')]
     private Collection $parametrers;
 
+    #[ORM\ManyToMany(targetEntity: Obstacle::class, inversedBy: 'epreuves')]
+    private Collection $obstacle;
+
     public function __construct()
     {
         $this->competition = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->parametrers = new ArrayCollection();
+        $this->obstacle = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,7 +78,7 @@ class Epreuve
         return $this->competition;
     }
 
-    public function addCompetition(competition $competition): self
+    public function addCompetition(Competition $competition): self
     {
         if (!$this->competition->contains($competition)) {
             $this->competition->add($competition);
@@ -83,7 +87,7 @@ class Epreuve
         return $this;
     }
 
-    public function removeCompetition(competition $competition): self
+    public function removeCompetition(Competition $competition): self
     {
         $this->competition->removeElement($competition);
 
@@ -142,5 +146,33 @@ class Epreuve
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Obstacle>
+     */
+    public function getObstacle(): Collection
+    {
+        return $this->obstacle;
+    }
+
+    public function addObstacle(Obstacle $obstacle): self
+    {
+        if (!$this->obstacle->contains($obstacle)) {
+            $this->obstacle->add($obstacle);
+        }
+
+        return $this;
+    }
+
+    public function removeObstacle(Obstacle $obstacle): self
+    {
+        $this->obstacle->removeElement($obstacle);
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->nom;
     }
 }
