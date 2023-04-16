@@ -18,7 +18,7 @@ class Obstacle
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'obstacles')]
+    #[ORM\OneToMany(inversedBy: 'obstacle')]
     private ?NoteTotal $noteTotal = null;
 
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'obstacle')]

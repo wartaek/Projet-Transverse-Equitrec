@@ -27,10 +27,10 @@ class NoteTotal
     #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'noteTotal')]
     private Collection $penalites;
 
-    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: Obstacle::class)]
+    #[ORM\ManyToOne(inversedBy: 'noteTotals', targetEntity: Obstacle::class)]
     private Collection $obstacles;
 
-    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: Cavalier::class)]
+    #[ORM\ManyToOne(inversedBy: 'noteTotals',  targetEntity: Cavaliers::class)]
     private Collection $cavaliers;
 
     #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'noteTotal')]

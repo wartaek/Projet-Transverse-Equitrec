@@ -27,7 +27,7 @@ class Cavalier
     #[ORM\Column(length: 50)]
     private ?string $dossard = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cavaliers')]
+    #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: NoteTotal::class)]
     private ?NoteTotal $noteTotal = null;
 
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]

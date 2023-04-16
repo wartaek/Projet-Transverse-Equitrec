@@ -15,8 +15,8 @@ class Penalite
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $libellePenalite = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $val = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $description = null;
@@ -34,14 +34,14 @@ class Penalite
         return $this->id;
     }
 
-    public function getLibellePenalite(): ?string
+    public function getval(): ?int
     {
-        return $this->libellePenalite;
+        return $this->val;
     }
 
-    public function setLibellePenalite(string $libellePenalite): self
+    public function setLibellePenalite(int $val): self
     {
-        $this->libellePenalite = $libellePenalite;
+        $this->val = $val;
 
         return $this;
     }
@@ -84,6 +84,6 @@ class Penalite
 
     public function __toString()
     {
-        return $this->libellePenalite;
+        return $this->val;
     }
 }
