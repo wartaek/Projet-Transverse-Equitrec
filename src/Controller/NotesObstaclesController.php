@@ -13,10 +13,10 @@ class  NotesObstaclesController extends AbstractController
     function calculer_total_Obstacle($JSONData) {
        
         $totals = array();
-        foreach ($JSONData as $item) {
-            $dossard = $item['dossard'];
+        foreach ($JSONData as $notes) {
+            $dossard = $notes['dossard'];
             $total = 0;
-            foreach ($item['notes'] as $note) {
+            foreach ($notes['notes'] as $note) {
                 if (isset($note['Val'])) {
                     $total += $note['Val'][0];
                 }

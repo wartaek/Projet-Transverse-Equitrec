@@ -24,28 +24,20 @@ class Obstacle
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'obstacle')]
     private Collection $parametrers;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
-=======
+
     #[ORM\OneToMany(targetEntity: Penalite::class, mappedBy: 'idObstacle')]
     private Collection $idPenalite;
->>>>>>> f3c5660 (push before rebase)
 
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
-<<<<<<< HEAD
         $this->epreuves = new ArrayCollection();
-=======
-        $this->idPenalite = new ArrayCollection();
->>>>>>> f3c5660 (push before rebase)
-=======
+
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
->>>>>>> 4ce9a68 (Revert "push before rebase")
     }
 
     public function getId(): ?int
@@ -103,10 +95,7 @@ class Obstacle
 
         return $this;
     }
-<<<<<<< HEAD
 
-    /**
-<<<<<<< HEAD
      * @return Collection<int, Epreuve>
      */
     public function getEpreuves(): Collection
@@ -119,48 +108,23 @@ class Obstacle
         if (!$this->epreuves->contains($epreufe)) {
             $this->epreuves->add($epreufe);
             $epreufe->addObstacle($this);
-=======
-     * @return Collection<int, Penalite>
-     */
-    public function getIdPenalite(): Collection
-    {
-        return $this->idPenalite;
-    }
-
-    public function addIdPenalite(Penalite $idPenalite): self
-    {
-        if (!$this->idPenalite->contains($idPenalite)) {
-            $this->idPenalite->add($idPenalite);
-            $idPenalite->addIdObstacle($this);
->>>>>>> f3c5660 (push before rebase)
         }
 
         return $this;
     }
 
-<<<<<<< HEAD
     public function removeEpreufe(Epreuve $epreufe): self
     {
         if ($this->epreuves->removeElement($epreufe)) {
             $epreufe->removeObstacle($this);
-=======
-    public function removeIdPenalite(Penalite $idPenalite): self
-    {
-        if ($this->idPenalite->removeElement($idPenalite)) {
-            $idPenalite->removeIdObstacle($this);
->>>>>>> f3c5660 (push before rebase)
         }
 
         return $this;
     }
-<<<<<<< HEAD
     
     public function __toString()
     {
         return $this->nom;
     }
-=======
->>>>>>> f3c5660 (push before rebase)
-=======
->>>>>>> 4ce9a68 (Revert "push before rebase")
+
 }
