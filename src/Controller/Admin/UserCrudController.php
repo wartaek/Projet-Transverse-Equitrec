@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -29,12 +29,17 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $rolesChoices = [
+            'Administrateur' => 'ROLE_ADMIN',
+            'Utilisateur' => 'ROLE_USER',
+        ];
+
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             EmailField::new('email'),
             TextField::new('password')->setFormType(PasswordType::class),
-            ArrayField::new('roles'),
+            ChoiceField::new('roles')->setChoices($rolesChoices)->allowMultipleChoices(),
             DateTimeField::new('last_login')->hideOnForm(),
             DateTimeField::new('register_date')->hideOnForm(),
             AssociationField::new('noteTotal'),

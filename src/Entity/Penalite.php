@@ -81,4 +81,9 @@ class Penalite
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->libellePenalite;
+    }
 }

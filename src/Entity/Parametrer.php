@@ -197,4 +197,9 @@ class Parametrer
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->informations;
+    }
 }
