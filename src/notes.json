@@ -1,0 +1,104 @@
+[
+  {
+    "dossard": "01",
+    "IdObstacle": 1,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [4]
+      },
+      {
+        "Libelle_Type_Note": "Style",
+        "Val": [2]
+      },
+      {
+        "Pénalité": [0]
+      }
+    ]
+  },
+  {
+    "dossard": "02",
+    "IdObstacle": 3,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [7]
+      },
+      {
+        "Libelle_Type_Note": "Allures",
+        "Val": [4]
+      },
+      {
+        "Pénalité": [1]
+      }
+    ]
+  },
+  {
+    "dossard": "02",
+    "IdObstacle":4,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [5]
+      },
+      {
+        "Libelle_Type_Note": "Allures",
+        "Val": [1]
+      },
+      {
+        "Pénalité": [1]
+      }
+    ]
+  },
+  {
+    "dossard": "03",
+    "IdObstacle": 2,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [5]
+      },
+      {
+        "Libelle_Type_Note": "Style",
+        "Val": [4]
+      },
+      {
+        "Pénalité": [1]
+      }
+    ]
+  },
+  {
+    "dossard": "04",
+    "IdObstacle": 4,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [2]
+      },
+      {
+        "Libelle_Type_Note": "Style",
+        "Val": [3]
+      },
+      {
+        "Pénalité": [0]
+      }
+    ]
+  },
+  {
+    "dossard": "05",
+    "IdObstacle": 4,
+    "notes": [
+      {
+        "Libelle_Type_Note": "Contrat",
+        "Val": [2]
+      },
+      {
+        "Libelle_Type_Note": "Allures",
+        "Val": [5]
+      },
+      {
+        "Pénalité": [3]
+      }
+    ]
+  }
+]

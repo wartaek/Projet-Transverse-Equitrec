@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+            {{ parent() }}
+	<link rel="stylesheet" href="/css/accueil.css">
+    <style type="text/css">
+        table {
+            width: auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Résultats de la compétition</h1>
+
+    <table>
+    <thead>
+        <tr>
+            <th>Dossard</th>
+            <th>Contrat</th>
+            <th>Style</th>
+            <th>Allures</th>
+            <th>Pénalité</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for notes in data %}
+            <tr>
+                <td>{{ notes.dossard }}</td>
+                {% set contrat = '' %}
+                {% set style = '' %}
+                {% set allures = '' %}
+                {% set penalite = '' %}
+                {% for note in notes.notes %}
+                    {% if note.Libelle_Type_Note == 'Contrat' %}
+                        {% set contrat = note.Val[0] %}
+                    {% elseif note.Libelle_Type_Note == 'Style' %}
+                        {% set style = note.Val[0] %}
+                    {% elseif note.Libelle_Type_Note == 'Allures' %}
+                        {% set allures = note.Val[0] %}
+
+                    {% endif %}
+                {% endfor %}
+                <td>{{ contrat }}</td>
+                <td>{{ style }}</td>
+                <td>{{ allures }}</td>
+                <td>{{ penalite }}</td>
+                <td>{{ totals[notes.dossard] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+
