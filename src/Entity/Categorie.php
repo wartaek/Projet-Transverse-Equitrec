@@ -18,7 +18,7 @@ class Categorie
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: epreuve::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Epreuve::class, inversedBy: 'categories')]
     private Collection $epreuve;
 
     public function __construct()
@@ -51,7 +51,7 @@ class Categorie
         return $this->epreuve;
     }
 
-    public function addEpreuve(epreuve $epreuve): self
+    public function addEpreuve(Epreuve $epreuve): self
     {
         if (!$this->epreuve->contains($epreuve)) {
             $this->epreuve->add($epreuve);
@@ -60,10 +60,15 @@ class Categorie
         return $this;
     }
 
-    public function removeEpreuve(epreuve $epreuve): self
+    public function removeEpreuve(Epreuve $epreuve): self
     {
         $this->epreuve->removeElement($epreuve);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 }
