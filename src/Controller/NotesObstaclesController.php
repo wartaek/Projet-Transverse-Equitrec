@@ -1,44 +1,46 @@
 <?php
 
-error_reporting(E_ERROR | E_PARSE);  // j'ai un warning sur l'affichage des Libelle_Type_Note mais l'affichage se fait correctement
+namespace App\Controller;
 
-// Recupere le contenue du JSON
-$JSONData = json_decode(file_get_contents("../src/notes.json"), true);
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
-// Calculer le total des notes par cavalier
-function calculer_total($notes) {
-    $total = 0;
-    foreach ($notes as $note) {
-        if(isset($note['Val'])) $total += array_sum($note['Val']);
-        if(isset($note['Pénalité'])) $total -= array_sum($note['Pénalité']);
+class  NotesObstaclesController extends AbstractController
+{
+    // Calculer le total des notes par cavalier
+    function calculer_total_Obstacle($JSONData) {
+       
+        $totals = array();
+        foreach ($JSONData as $item) {
+            $dossard = $item['dossard'];
+            $total = 0;
+            foreach ($item['notes'] as $note) {
+                if (isset($note['Val'])) {
+                    $total += $note['Val'][0];
+                }
+            }
+            $totals[$dossard] = $total;
+        }  
+        return $totals;
     }
-    return $total;
+    
+
+    #[Route('/note/obstacles', name: 'app_note_obstacles')]
+    function index(PersistenceManagerRegistry $doctrine): Response
+    {
+        // Lire les données du fichier JSON
+        $JSONData = json_decode(file_get_contents("../src/notes.json"), true);
+
+        // Calculer le total des notes pour chaque dossard
+        $resultatsTotal = $this->calculer_total_Obstacle($JSONData);
+        return $this->render('notesObstacle.html.twig', [
+            'data' => $JSONData,
+            'totals' => $resultatsTotal
+        ]);
+
+    }
+
 }
 
-
-// Tableau de notes
-echo '<table>';
-    echo '<tr><th>Dossard</th><th>Numéro d\'obstacle</th><th>Contrat</th><th>Style</th><th>Allures</th><th>Pénalité</th><th>Total</th></tr>';
-        foreach ($JSONData as $cavalier) {
-            echo '<tr>';
-            echo '<td>' . $cavalier['dossard'] . '</td>';
-            echo '<td>' . $cavalier['IdObstacle'] . '</td>';
-            $contrat = 0;
-            $style = 0;
-            $allures = 0;
-            $penalite = 0;
-            foreach ($cavalier['notes'] as $note) {
-                if($note['Libelle_Type_Note'] == 'Contrat') $contrat = array_sum($note['Val']);
-                elseif($note['Libelle_Type_Note'] == 'Style') $style = array_sum($note['Val']);
-                elseif($note['Libelle_Type_Note'] == 'Allures')$allures = array_sum($note['Val']);
-                elseif(isset($note['Pénalité'])) $penalite = array_sum($note['Pénalité']);
-            }
-            $total = calculer_total($cavalier['notes']);
-            echo '<td>' . $contrat . '</td>';
-            echo '<td>' . $style . '</td>';
-            echo '<td>' . $allures . '</td>';
-            echo '<td>' . $penalite . '</td>';
-            echo '<td class="total">' . $total . '</td>';
-            echo '</tr>';
-        }
-echo '</table>';
