@@ -22,18 +22,18 @@ class EpreuveController extends AbstractController
         ]);
     }
 
-    #[Route('/epreuve/epreuve/{id}', name: 'epreuve')]
-    public function epreuve(EpreuveRepository $epr, $id): Response
-    {
-        $plans = $epr->find($id);
-        $obs = $plans->getParametrers();
-        //dd($epr);
+    // #[Route('/epreuve/epreuve/{id}', name: 'epreuve')]
+    // public function epreuve(EpreuveRepository $epr, $id): Response
+    // {
+    //     $plans = $epr->find($id);
+    //     $obs = $plans->getParametrers();
+    //     //dd($epr);
 
-        return $this->render('epreuve/index.html.twig', array(
-            'epreuve' => $plans, 
-            'obs' => $obs
-        ));
-    }
+    //     return $this->render('epreuve/index.html.twig', array(
+    //         'epreuve' => $plans, 
+    //         'obs' => $obs
+    //     ));
+    // }
 
     #[Route('/epreuve/newEpreuve', name: 'newEpreuve')]
     public function newEpreuve(Request $request, EntityManagerInterface $em)

@@ -5,11 +5,16 @@ namespace App\Controller;
 use App\Entity\Cavalier;
 use App\Entity\Competition;
 use App\Entity\Epreuve;
+use App\Entity\Obstacle;
+use App\Entity\Parametrer;
 use App\Form\CompetitonType;
+use App\Form\ParametreType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CompetitionRepository;
+use App\Repository\EpreuveRepository;
+use App\Repository\ObstacleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -127,7 +132,8 @@ class CompetitionController extends AbstractController
     #[Route('/competition/addEpreuveComp/{idcomp}', name: 'addEpreuveComp')]
     public function addEpreuveComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
     {
-        $epreuve = $em->getRepository(Epreuve::class)->find($request->get('epreuve_id'));
+        $epreuve = $em->getRepository(Epreuve::class)->findOneBy(['nom' => $request->get('epreuve_nom')]);
+        //$epreuve = $em->getRepository(Epreuve::class)->find($request->get('epreuve_id'));
         $competition = $comp->find($idcomp);
 
         if (!$epreuve) {
@@ -196,5 +202,100 @@ class CompetitionController extends AbstractController
         $this->addFlash('success', 'Cavalier ajouté à la compétition !');
 
         return $this->redirectToRoute('compet', ['id' => $idcomp]);
+    }
+
+    #[Route('/competition/epreuve/{id}', name: 'epreuve')]
+    public function epreuve(EpreuveRepository $epr, $id): Response
+    {
+        $epreuve = $epr->find($id);
+        $param = $epreuve->getObstacle();
+        //dd($param);
+
+        return $this->render('competition/epreuve.html.twig', array(
+            'epreuve' => $epreuve,
+            'obstacles' => $param,
+        ));
+    }
+
+    #[Route('/competition/removeObsEpre/{id}/{idepr}', name: 'removeObsEpre')]
+    public function removeObsEpre($id, $idepr, EntityManagerInterface $em, EpreuveRepository $epr)
+    {
+        $obs = $em->getRepository(Obstacle::class)->find($id);
+        $plans = $epr->find($idepr);
+        if (!$obs) {
+            throw $this->createNotFoundException(
+                `Aucun obstacle trouvé` . $id
+            );
+        }
+        $plans->removeObstacle($obs);
+        $em->flush();
+        $this->addFlash('success', 'Obstacle supprimée de l`épreuve !');
+        return new RedirectResponse($this->container->get('router')->generate('epreuve', ['id' => $idepr]));
+    }
+
+    #[Route('/competition/addObsEpre/{idepr}', name: 'addObsEpre')]
+    public function addObsEpre(Request $request, EntityManagerInterface $em, EpreuveRepository $epr, $idepr)
+    {
+        
+        $obstacle = $em->getRepository(Obstacle::class)->findOneBy(['nom' => $request->get('obstacle_nom')]);
+        $epreuve = $epr->find($idepr);//dd($obstacle);
+        if (!$obstacle) {
+            $this->addFlash('error', 'Aucun obstacle trouvé avec ce nom');
+            return $this->redirectToRoute('epreuve', ['id' => $idepr]);
+        }
+
+        if (!$epreuve) {
+            $this->addFlash('error', 'Aucune épreuve trouvée avec ce nom');
+            return $this->redirectToRoute('epreuve', ['id' => $idepr]);
+        }//dd($epreuve->getObstacle());
+
+        if ($epreuve->getObstacle()->contains($obstacle)) {
+            $this->addFlash('warning', 'Cet obstacle est déjà liée à l`épreuve');
+            return $this->redirectToRoute('epreuve', ['id' => $idepr]);
+        }
+
+        $epreuve->addObstacle($obstacle);//dd($epreuve->addObstacle($obstacle));
+        $em->flush();
+
+        $this->addFlash('success', 'Obstacle ajouté à l`épreuve !');
+
+        return $this->redirectToRoute('epreuve', ['id' => $idepr]);
+    }
+
+    #[Route('/competition/obstacle/{id}', name: 'obstacle')]
+    public function obstacle(ObstacleRepository $epr, $id): Response
+    {
+        $epreuve = $epr->find($id);
+        $param = $epreuve->getParametrers();
+        //dd($param);
+
+        return $this->render('competition/obstacle.html.twig', array(
+            'obstacles' => $epreuve,
+            'params' => $param,
+        ));
+    }
+
+    #[Route('/competition/changerObs/{id}', name: 'changerObs')]
+    public function changerObstacle(Request $request, $id, EntityManagerInterface $em)
+    {
+
+        $plans = $em->getRepository(Parametrer::class)->find($id);
+        if (!$plans) {
+            throw $this->createNotFoundException(
+                `Aucun Obstacles trouvées` . $id
+            );
+        }
+        $form = $this->createForm(ParametreType::class, $plans);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'Obstacle mise à jour !');
+            return new RedirectResponse($this->container->get('router')->generate('competition'));
+        }
+
+        return $this->render('competition/newObs.html.twig', array(
+            'formNewobs' => $form->createView()
+        ));
     }
 }
