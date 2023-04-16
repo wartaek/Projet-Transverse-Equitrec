@@ -21,27 +21,20 @@ class NoteTotal
     #[ORM\Column(length: 250, nullable: true)]
     private ?string $observation = null;
 
-    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: User::class)]
+    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: user::class)]
     private Collection $user;
 
     #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'noteTotal')]
     private Collection $penalites;
 
-    #[ORM\ManyToOne(inversedBy: 'noteTotal', targetEntity: Obstacle::class)]
+    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: Obstacle::class)]
     private Collection $obstacles;
 
-
-    #[ORM\ManyToOne(inversedBy: 'noteTotal', targetEntity: Cavalier::class)]
+    #[ORM\OneToMany(mappedBy: 'noteTotal', targetEntity: Cavalier::class)]
     private Collection $cavaliers;
 
     #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'noteTotal')]
     private Collection $posseders;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $val = null;
-
-    #[ORM\ManyToOne(targetEntity: TypeNote::class, inversedBy: 'idNote')]
-    private Collection $idTypeNote;
 
     public function __construct()
     {
@@ -50,7 +43,6 @@ class NoteTotal
         $this->obstacles = new ArrayCollection();
         $this->cavaliers = new ArrayCollection();
         $this->posseders = new ArrayCollection();
-        $this->idTypeNote = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +169,27 @@ class NoteTotal
         return $this->cavaliers;
     }
 
+    public function addCavalier(Cavalier $cavalier): self
+    {
+        if (!$this->cavaliers->contains($cavalier)) {
+            $this->cavaliers->add($cavalier);
+            $cavalier->setNoteTotal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCavalier(Cavalier $cavalier): self
+    {
+        if ($this->cavaliers->removeElement($cavalier)) {
+            // set the owning side to null (unless already changed)
+            if ($cavalier->getNoteTotal() === $this) {
+                $cavalier->setNoteTotal(null);
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Posseder>
@@ -200,45 +213,6 @@ class NoteTotal
     {
         if ($this->posseders->removeElement($posseder)) {
             $posseder->removeNoteTotal($this);
-        }
-
-        return $this;
-    }
-
-    public function getVal(): ?int
-    {
-        return $this->val;
-    }
-
-    public function setVal(?int $val): self
-    {
-        $this->val = $val;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TypeNote>
-     */
-    public function getIdTypeNote(): Collection
-    {
-        return $this->idTypeNote;
-    }
-
-    public function addIdTypeNote(TypeNote $idTypeNote): self
-    {
-        if (!$this->idTypeNote->contains($idTypeNote)) {
-            $this->idTypeNote->add($idTypeNote);
-            $idTypeNote->addIdNote($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdTypeNote(TypeNote $idTypeNote): self
-    {
-        if ($this->idTypeNote->removeElement($idTypeNote)) {
-            $idTypeNote->removeIdNote($this);
         }
 
         return $this;

@@ -27,20 +27,19 @@ class Cavalier
     #[ORM\Column(length: 50)]
     private ?string $dossard = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cavaliers')]
+    private ?NoteTotal $noteTotal = null;
+
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
     private Collection $niveaux;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'cavalier')]
     private Collection $competitions;
 
-    #[ORM\ManyToMany(targetEntity: Penalite::class, mappedBy: 'idCavalier')]
-    private Collection $idPenalite;
-
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
         $this->competitions = new ArrayCollection();
-        $this->idPenalite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +91,18 @@ class Cavalier
     public function setDossard(string $dossard): self
     {
         $this->dossard = $dossard;
+
+        return $this;
+    }
+
+    public function getNoteTotal(): ?NoteTotal
+    {
+        return $this->noteTotal;
+    }
+
+    public function setNoteTotal(?NoteTotal $noteTotal): self
+    {
+        $this->noteTotal = $noteTotal;
 
         return $this;
     }
@@ -152,6 +163,7 @@ class Cavalier
 
         return $this;
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     public function __toString()
@@ -185,4 +197,6 @@ class Cavalier
         return $this;
 >>>>>>> f3c5660 (push before rebase)
     }
+=======
+>>>>>>> 4ce9a68 (Revert "push before rebase")
 }

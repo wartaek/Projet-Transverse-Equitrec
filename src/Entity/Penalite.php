@@ -15,7 +15,7 @@ class Penalite
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 50)]
     private ?string $libellePenalite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -24,20 +24,9 @@ class Penalite
     #[ORM\ManyToMany(targetEntity: NoteTotal::class, inversedBy: 'penalites')]
     private Collection $noteTotal;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $val = null;
-
-    #[ORM\ManyToOne(targetEntity: obstacle::class, inversedBy: 'idPenalite')]
-    private Collection $idObstacle;
-
-    #[ORM\ManyToOne(targetEntity: cavalier::class, inversedBy: 'idPenalite')]
-    private Collection $idCavalier;
-
     public function __construct()
     {
         $this->noteTotal = new ArrayCollection();
-        $this->idObstacle = new ArrayCollection();
-        $this->idCavalier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +81,7 @@ class Penalite
 
         return $this;
     }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     public function __toString()
@@ -158,4 +148,6 @@ class Penalite
         return $this;
 >>>>>>> f3c5660 (push before rebase)
     }
+=======
+>>>>>>> 4ce9a68 (Revert "push before rebase")
 }

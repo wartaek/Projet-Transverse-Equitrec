@@ -18,12 +18,13 @@ class Obstacle
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'idObstacle', targetEntity: NoteTotal::class)]
+    #[ORM\ManyToOne(inversedBy: 'obstacles')]
     private ?NoteTotal $noteTotal = null;
 
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'obstacle')]
     private Collection $parametrers;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
@@ -40,6 +41,11 @@ class Obstacle
 =======
         $this->idPenalite = new ArrayCollection();
 >>>>>>> f3c5660 (push before rebase)
+=======
+    public function __construct()
+    {
+        $this->parametrers = new ArrayCollection();
+>>>>>>> 4ce9a68 (Revert "push before rebase")
     }
 
     public function getId(): ?int
@@ -97,6 +103,7 @@ class Obstacle
 
         return $this;
     }
+<<<<<<< HEAD
 
     /**
 <<<<<<< HEAD
@@ -154,4 +161,6 @@ class Obstacle
     }
 =======
 >>>>>>> f3c5660 (push before rebase)
+=======
+>>>>>>> 4ce9a68 (Revert "push before rebase")
 }

@@ -21,13 +21,9 @@ class TypeNote
     #[ORM\ManyToMany(targetEntity: Posseder::class, mappedBy: 'typeNote')]
     private Collection $posseders;
 
-    #[ORM\OneToMany(targetEntity: NoteTotal::class, mappedBy: 'idTypeNote')]
-    private Collection $idNote;
-
     public function __construct()
     {
         $this->posseders = new ArrayCollection();
-        $this->idNote = new ArrayCollection();
     }
 
 
@@ -76,6 +72,7 @@ class TypeNote
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function __toString()
     {
         return $this->libelleTypeNote;
@@ -106,4 +103,6 @@ class TypeNote
     }
 
 >>>>>>> f3c5660 (push before rebase)
+=======
+>>>>>>> 4ce9a68 (Revert "push before rebase")
 }
