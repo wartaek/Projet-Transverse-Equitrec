@@ -379,15 +379,9 @@
                 "doctrine/coding-standard": "11.1.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2022.3",
-<<<<<<< HEAD
-                "phpstan/phpstan": "1.10.3",
-                "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.4",
-=======
                 "phpstan/phpstan": "1.10.9",
                 "phpstan/phpstan-strict-rules": "^1.5",
                 "phpunit/phpunit": "9.6.6",
->>>>>>> ab4a8c9c7d658839902131a0f59ae5839384b4be
                 "psalm/plugin-phpunit": "0.18.4",
                 "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^5.4|^6.0",
@@ -452,11 +446,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/doctrine/dbal/tree/3.6.1"
-=======
                 "source": "https://github.com/doctrine/dbal/tree/3.6.2"
->>>>>>> ab4a8c9c7d658839902131a0f59ae5839384b4be
             },
             "funding": [
                 {
@@ -472,11 +462,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2023-03-02T19:26:24+00:00"
-=======
             "time": "2023-04-14T07:25:38+00:00"
->>>>>>> ab4a8c9c7d658839902131a0f59ae5839384b4be
         },
         {
             "name": "doctrine/deprecations",
