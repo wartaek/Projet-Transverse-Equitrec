@@ -16,7 +16,6 @@
 				<div class="col">
 					<form action="{{ path('new_cavalier') }}" method="POST">
 						<h2 style="text-align:center;">Création des cavaliers</h2>
-						<p style="color:{{color}};">{{message}}</p>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Nom</span>
@@ -33,7 +32,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" style="width: 5em">Licence</span>
 							</div>
-							<input type="tel" class="form-control" name="licence" placeholder="Saisir le numéro de licence du cavalier" pattern="[0-9]" maxlength="11" >
+							<input type="tel" class="form-control" name="licence" placeholder="Saisir le numéro de licence du cavalier" pattern="[0-9]+" maxlength="10" >
 						</div>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -59,6 +58,17 @@
 						<button type="submit" class="btn btn-success">Enregistrer le cavalier</button>
 					</form>
 				</div>
+			</div>
+		</section>
+		<br>
+		<section class="container my-3">
+			<div class="list-group">
+				<h2 style="text-align:center;">Cavaliers inscrits</h2>
+				<ul class="list-group list-group-flush">
+					{% for cavalier in cavaliers %}
+						<li class="list-group-item">{{ cavalier.nom }} {{ cavalier.prenom }} - N°{{ cavalier.dossard }} - {{ cavalier.license }} - {% for niveaux in cavalier.niveaux %} {{ niveaux }} {% endfor %}</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</section>
 	</main>

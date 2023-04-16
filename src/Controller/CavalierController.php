@@ -9,26 +9,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
-
 
 class CavalierController extends AbstractController
 {
     #[Route('/cavalier', name: 'cavalier')]
-    public function index(): Response
+    public function index(PersistenceManagerRegistry $doctrine): Response
     {
+        $entityManager = $doctrine->getManager();
+        $cavaliers = $entityManager->getRepository(Cavalier::class)->findAll();
+
         return $this->render('cavalier/index.html.twig', [
             'controller_name' => 'CavalierController',
-            'message' => '',
-            'color' => ''
+            'cavaliers' => $cavaliers,
         ]);
     }
 
     #[Route('/newCavalier', name: 'new_cavalier')]
     public function traitementCavalier(Request $request, PersistenceManagerRegistry $doctrine): Response
-    { 
-        dump($request);
-        
+    {        
         $manager = $doctrine->getManager();
 
         if ($request->request->count() > 0)
@@ -55,23 +53,19 @@ class CavalierController extends AbstractController
             $manager->persist($ObjNiveau);
             $manager->flush();
 
-            // return new Response('Cavalier enregistré !');
-            return $this->render('cavalier/index.html.twig', [
-                'controller_name' => 'CavalierController',
-                'message' => 'Cavalier enregistré !',
-                'color' => 'green'
-            ]);
+            $message = "Cavalier enregistré !";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+
+            return $this->index($doctrine);
         }        
         else 
         {
-            // return new Response('Erreur lors de l\'enregistrement.');
-            return $this->render('cavalier/index.html.twig', [
-                'controller_name' => 'CavalierController',
-                'message' => 'Erreur lors de l\'enregistrement.',
-                'color' => 'red'
-            ]);
-        }
-        
+            $message = "Erreur lors de l'enregistrement.";
+            echo "<script type='text/javascript'>alert('$message');</script>";
 
+            return $this->index($doctrine);
+        }
     }
+
+   
 }
