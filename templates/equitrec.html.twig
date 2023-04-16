@@ -4,14 +4,26 @@
 	<link rel="stylesheet" href="/css/accueil.css">
 	{{ parent() }}
 {% endblock %}
-{% block title %}Accueil Equitrec
+
+{% block title %}Bienvenue sur Equitrec
 {% endblock %}
 
 {% block content %}
-	<main>
-		<div class="col-md-12">
-			<h2>Accueil en cour de creation...</h2>
-			<img src="{{ asset('img/Back.jpg') }}" alt="Accueil" style="width: 100%; height: 100%;">
+	<main class="inner cover">
+		<div id="menu" class="col-md-12">
+			<h1 class="cover-heading">Bienvenue sur EQUITREC,<br> votre site de compétitions TREC.</h1>
+			<p>En vous connectant, vous pourrez créer et paramétrer vos compétitions.</p>
+			{# <p>Chez Equitrec, nous sommes passionnés par les chevaux et nous avons créé un site qui vous permettra de découvrir les compétitions équestres sous un nouveau jour. Que vous soyez cavalier, propriétaire de chevaux ou simplement amateur de ce noble animal, vous trouverez sur notre site tout ce dont vous avez besoin pour suivre les compétitions et rester à jour avec les dernières tendances du monde équestre. Avec notre système de notation de compétition, vous pourrez suivre les performances de vos cavaliers préférés et comprendre ce qui les distingue des autres. Nous vous invitons à explorer notre site et à vous immerger dans l'univers fascinant des compétitions équestres.</p> #}
+			{# <img src="{{ asset('img/Back.jpg') }}" alt="Accueil" style="width: 100%; height: 100%;"> #}
+
 		</div>
 	</main>
+{% endblock %}
+{% block scripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function () {
+			$("#menu").fadeIn();
+		});
+	</script>
 {% endblock %}
