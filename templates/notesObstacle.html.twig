@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 {% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	{{ parent() }}
 	<style>
 		main {
@@ -8,14 +9,9 @@
 			align-items: center;
 		}
 
-		.col-md-1 {
-			width: 75%;
-			margin: 0 auto;
-		}
-
 		table {
 			border-collapse: collapse;
-			width: 75%;
+			width: 100%;
 			font-size: 16px;
 			border-radius: 2px;
 		}
@@ -39,7 +35,7 @@
 {% endblock %}
 {% block content %}
 	<main>
-		<div class="col-md-1">
+		<div>
 			<h2>Résultats des cavaliers par obstacles</h2>
 
 			<table>
