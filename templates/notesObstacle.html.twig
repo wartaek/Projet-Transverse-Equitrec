@@ -1,71 +1,89 @@
 {% extends "base.html.twig" %}
-
 {% block stylesheets %}
-            {{ parent() }}
-	<link rel="stylesheet" href="/css/accueil.css">
-    <style type="text/css">
-        table {
-            width: auto;
-            border-collapse: collapse;
-        }
+	{{ parent() }}
+	<style>
+		main {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+		.col-md-1 {
+			width: 75%;
+			margin: 0 auto;
+		}
 
-        th {
-            background-color: #f2f2f2;
-        }
+		table {
+			border-collapse: collapse;
+			width: 75%;
+			font-size: 16px;
+			border-radius: 2px;
+		}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+		th,
+		td {
+			border: 1.5px solid #ccc;
+			padding: 10px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
+	</style>
 {% endblock %}
-
 {% block content %}
-    <h1>Résultats de la compétition</h1>
+	<main>
+		<div class="col-md-1">
+			<h2>Résultats des cavaliers par obstacles</h2>
 
-    <table>
-    <thead>
-        <tr>
-            <th>Dossard</th>
-            <th>Contrat</th>
-            <th>Style</th>
-            <th>Allures</th>
-            <th>Pénalité</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for notes in data %}
-            <tr>
-                <td>{{ notes.dossard }}</td>
-                {% set contrat = '' %}
-                {% set style = '' %}
-                {% set allures = '' %}
-                {% set penalite = '' %}
-                {% for note in notes.notes %}
-                    {% if note.Libelle_Type_Note == 'Contrat' %}
-                        {% set contrat = note.Val[0] %}
-                    {% elseif note.Libelle_Type_Note == 'Style' %}
-                        {% set style = note.Val[0] %}
-                    {% elseif note.Libelle_Type_Note == 'Allures' %}
-                        {% set allures = note.Val[0] %}
-
-                    {% endif %}
-                {% endfor %}
-                <td>{{ contrat }}</td>
-                <td>{{ style }}</td>
-                <td>{{ allures }}</td>
-                <td>{{ penalite }}</td>
-                <td>{{ totals[notes.dossard] }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+			<table>
+				<thead>
+					<tr>
+						<th>Dossard</th>
+						<th>Contrat</th>
+						<th>Style</th>
+						<th>Allures</th>
+						<th>Pénalité</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for valeurs in data %}
+						<tr>
+							<td>{{ valeurs.dossard }}</td>
+							{% set contrat = '' %}
+							{% set style = '' %}
+							{% set allures = '' %}
+							{% set penalite = '' %}
+							{% for key in valeurs.notes %}
+								{% if (key.Libelle_Type_Note is defined) and (key.Libelle_Type_Note == "Contrat") %}
+									{% set contrat = key.Val[0] %}
+								{% elseif (key.Libelle_Type_Note is defined) and (key.Libelle_Type_Note == "Style") %}
+									{% set style = key.Val[0] %}
+								{% elseif (key.Libelle_Type_Note is defined) and (key.Libelle_Type_Note == "Allures") %}
+									{% set allures = key.Val[0] %}
+								{% endif %}
+								{% if key.Pénalité is defined %}
+									{% set penalite = key.Pénalité[0] %}
+								{% endif %}
+							{% endfor %}
+							<td>{{ contrat }}</td>
+							<td>{{ style }}</td>
+							<td>{{ allures }}</td>
+							<td>{{ penalite }}</td>
+							<td>{{ totals[valeurs.dossard] }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<br>
+			<center><input type="button" onclick="location.href='{{ path('app_note_competition') }}';" value="Afficher les notes de la compétition"  class="btn btn-primary"/></center>
+		</div>
+	</main>
 {% endblock %}
-
