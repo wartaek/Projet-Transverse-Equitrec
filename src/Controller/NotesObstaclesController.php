@@ -19,6 +19,8 @@ class  NotesObstaclesController extends AbstractController
             foreach ($notes['notes'] as $note) {
                 if (isset($note['Val'])) {
                     $total += $note['Val'][0];
+                }elseif(isset($note['Pénalité'])){
+                    $total -= $note['Pénalité'][0];
                 }
             }
             $totals[$dossard] = $total;
