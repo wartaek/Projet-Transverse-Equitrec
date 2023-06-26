@@ -40,9 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $register_date = null;
 
     #[ORM\ManyToOne(inversedBy: 'User')]
-    private ?NoteTotal $noteTotal = null;
-
-    #[ORM\ManyToOne(inversedBy: 'User')]
     private ?Competition $competition = null;
 
     public function getId(): ?int
@@ -147,18 +144,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRegisterDate(\DateTimeInterface $register_date): self
     {
         $this->register_date = $register_date;
-
-        return $this;
-    }
-
-    public function getNoteTotal(): ?NoteTotal
-    {
-        return $this->noteTotal;
-    }
-
-    public function setNoteTotal(?NoteTotal $noteTotal): self
-    {
-        $this->noteTotal = $noteTotal;
 
         return $this;
     }

@@ -7,7 +7,6 @@ use App\Entity\Cavalier;
 use App\Entity\Competition;
 use App\Entity\Epreuve;
 use App\Entity\Niveau;
-use App\Entity\NoteTotal;
 use App\Entity\Obstacle;
 use App\Entity\Parametrer;
 use App\Entity\Penalite;
@@ -57,8 +56,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('List Epreuve', 'fas fa-bars', Epreuve::class);
         yield MenuItem::section('Niveau');
         yield MenuItem::linkToCrud('List Niveau', 'fas fa-bars', Niveau::class);
-        yield MenuItem::section('NoteTotal');
-        yield MenuItem::linkToCrud('List NoteTotal', 'fas fa-bars', NoteTotal::class);
         yield MenuItem::section('Obstacle');
         yield MenuItem::linkToCrud('List Obstacle', 'fas fa-bars', Obstacle::class);
         yield MenuItem::section('Parametrer');

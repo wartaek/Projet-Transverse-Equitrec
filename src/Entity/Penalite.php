@@ -21,13 +21,8 @@ class Penalite
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: NoteTotal::class, inversedBy: 'penalites')]
-    private Collection $noteTotal;
-
-    public function __construct()
-    {
-        $this->noteTotal = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'penalite', cascade: ['persist', 'remove'])]
+    private ?Note $note = null;
 
     public function getId(): ?int
     {
@@ -58,32 +53,30 @@ class Penalite
         return $this;
     }
 
-    /**
-     * @return Collection<int, NoteTotal>
-     */
-    public function getNoteTotal(): Collection
-    {
-        return $this->noteTotal;
-    }
-
-    public function addNoteTotal(NoteTotal $noteTotal): self
-    {
-        if (!$this->noteTotal->contains($noteTotal)) {
-            $this->noteTotal->add($noteTotal);
-        }
-
-        return $this;
-    }
-
-    public function removeNoteTotal(NoteTotal $noteTotal): self
-    {
-        $this->noteTotal->removeElement($noteTotal);
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->libellePenalite;
+    }
+
+    public function getNote(): ?Note
+    {
+        return $this->note;
+    }
+
+    public function setNote(?Note $note): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($note === null && $this->note !== null) {
+            $this->note->setPenalite(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($note !== null && $note->getPenalite() !== $this) {
+            $note->setPenalite($this);
+        }
+
+        $this->note = $note;
+
+        return $this;
     }
 }

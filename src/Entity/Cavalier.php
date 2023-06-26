@@ -27,14 +27,14 @@ class Cavalier
     #[ORM\Column(length: 50)]
     private ?string $dossard = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cavaliers')]
-    private ?NoteTotal $noteTotal = null;
-
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
     private Collection $niveaux;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'cavalier')]
     private Collection $competitions;
+
+    #[ORM\OneToOne(mappedBy: 'cavalier', cascade: ['persist', 'remove'])]
+    private ?Note $note = null;
 
     public function __construct()
     {
@@ -91,18 +91,6 @@ class Cavalier
     public function setDossard(string $dossard): self
     {
         $this->dossard = $dossard;
-
-        return $this;
-    }
-
-    public function getNoteTotal(): ?NoteTotal
-    {
-        return $this->noteTotal;
-    }
-
-    public function setNoteTotal(?NoteTotal $noteTotal): self
-    {
-        $this->noteTotal = $noteTotal;
 
         return $this;
     }
@@ -167,5 +155,27 @@ class Cavalier
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getNote(): ?Note
+    {
+        return $this->note;
+    }
+
+    public function setNote(?Note $note): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($note === null && $this->note !== null) {
+            $this->note->setIdCavalier(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($note !== null && $note->getIdCavalier() !== $this) {
+            $note->setIdCavalier($this);
+        }
+
+        $this->note = $note;
+
+        return $this;
     }
 }

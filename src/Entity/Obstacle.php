@@ -18,14 +18,14 @@ class Obstacle
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'obstacles')]
-    private ?NoteTotal $noteTotal = null;
-
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'obstacle')]
     private Collection $parametrers;
 
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
+
+    #[ORM\OneToOne(mappedBy: 'id_obstacle', cascade: ['persist', 'remove'])]
+    private ?Note $note = null;
 
     public function __construct()
     {
@@ -46,18 +46,6 @@ class Obstacle
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getNoteTotal(): ?NoteTotal
-    {
-        return $this->noteTotal;
-    }
-
-    public function setNoteTotal(?NoteTotal $noteTotal): self
-    {
-        $this->noteTotal = $noteTotal;
 
         return $this;
     }
@@ -119,5 +107,27 @@ class Obstacle
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getNote(): ?Note
+    {
+        return $this->note;
+    }
+
+    public function setNote(?Note $note): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($note === null && $this->note !== null) {
+            $this->note->setIdObstacle(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($note !== null && $note->getIdObstacle() !== $this) {
+            $note->setIdObstacle($this);
+        }
+
+        $this->note = $note;
+
+        return $this;
     }
 }
