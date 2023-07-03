@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
+	{{ parent() }}
+{% endblock %}
+{% block title %}
+	Liste des Juges
+{% endblock %}
+
+{% block content %}
+	<main>
+		<div class="col-md-1">
+			{% for juge in juges %}
+				<h3>{{ juge.name }}</h3>
+			{% endfor %}
+		</div>
+
+		<div>
+			<img src="{{ qrCodeDataUri }}" alt="Code QR des juges">
+		</div>
+	</main>
+{% endblock %}

@@ -41,15 +41,19 @@ class CompetitionController extends AbstractController
     }
 
     #[Route('/competition/compet/{id}', name: 'compet')]
-    public function compet(CompetitionRepository $comp, $id): Response
+    public function compet(CompetitionRepository $comp, $id, EntityManagerInterface $em): Response
     {
         $plans = $comp->find($id);
         $epr = $plans->getEpreuves();
         $cav = $plans->getCavalier();
+        $epreuve = $em->getRepository(Epreuve::class)->findAll();
+        $cavalier = $em->getRepository(Cavalier::class)->findAll();
 
         return $this->render('competition/compet.html.twig', array(
             'competition' => $plans,
             'epreuves' => $epr,
+            'epreuve' => $epreuve,
+            'cavalier' => $cavalier,
             'cavaliers' => $cav
         ));
     }
@@ -132,7 +136,7 @@ class CompetitionController extends AbstractController
     #[Route('/competition/addEpreuveComp/{idcomp}', name: 'addEpreuveComp')]
     public function addEpreuveComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
     {
-        $epreuve = $em->getRepository(Epreuve::class)->findOneBy(['nom' => $request->get('epreuve_nom')]);
+        $epreuve = $em->getRepository(Epreuve::class)->findOneBy(['id' => $request->get('epreuve_nom')]);
         //$epreuve = $em->getRepository(Epreuve::class)->find($request->get('epreuve_id'));
         $competition = $comp->find($idcomp);
 
@@ -179,7 +183,7 @@ class CompetitionController extends AbstractController
     #[Route('/competition/addCavalierComp/{idcomp}', name: 'addCavalierComp')]
     public function addCavalierComp(Request $request, EntityManagerInterface $em, CompetitionRepository $comp, $idcomp)
     {
-        $cavalier = $em->getRepository(Cavalier::class)->findOneBy(['nom' => $request->get('cavalier_id')]);
+        $cavalier = $em->getRepository(Cavalier::class)->findOneBy(['id' => $request->get('cavalier_id')]);
         $competition = $comp->find($idcomp);
         if (!$cavalier) {
             $this->addFlash('warning', 'Aucun cavalier trouvé avec ce nom');
@@ -205,15 +209,16 @@ class CompetitionController extends AbstractController
     }
 
     #[Route('/competition/epreuve/{id}', name: 'epreuve')]
-    public function epreuve(EpreuveRepository $epr, $id): Response
+    public function epreuve(EpreuveRepository $epr, EntityManagerInterface $em, $id): Response
     {
         $epreuve = $epr->find($id);
         $param = $epreuve->getObstacle();
-        //dd($param);
+        $obstacle = $em->getRepository(Obstacle::class)->findAll();
 
         return $this->render('competition/epreuve.html.twig', array(
             'epreuve' => $epreuve,
             'obstacles' => $param,
+            'obstacle' => $obstacle,
         ));
     }
 
@@ -237,8 +242,8 @@ class CompetitionController extends AbstractController
     public function addObsEpre(Request $request, EntityManagerInterface $em, EpreuveRepository $epr, $idepr)
     {
         
-        $obstacle = $em->getRepository(Obstacle::class)->findOneBy(['nom' => $request->get('obstacle_nom')]);
-        $epreuve = $epr->find($idepr);//dd($obstacle);
+        $obstacle = $em->getRepository(Obstacle::class)->findOneBy(['id' => $request->get('obstacle_nom')]);
+        $epreuve = $epr->find($idepr); //dd($obstacle);
         if (!$obstacle) {
             $this->addFlash('warning', 'Aucun obstacle trouvé avec ce nom');
             return $this->redirectToRoute('epreuve', ['id' => $idepr]);
@@ -247,14 +252,14 @@ class CompetitionController extends AbstractController
         if (!$epreuve) {
             $this->addFlash('warning', 'Aucune épreuve trouvée avec ce nom');
             return $this->redirectToRoute('epreuve', ['id' => $idepr]);
-        }//dd($epreuve->getObstacle());
+        } //dd($epreuve->getObstacle());
 
         if ($epreuve->getObstacle()->contains($obstacle)) {
             $this->addFlash('warning', 'Cet obstacle est déjà liée à l`épreuve');
             return $this->redirectToRoute('epreuve', ['id' => $idepr]);
         }
 
-        $epreuve->addObstacle($obstacle);//dd($epreuve->addObstacle($obstacle));
+        $epreuve->addObstacle($obstacle); //dd($epreuve->addObstacle($obstacle));
         $em->flush();
 
         $this->addFlash('success', 'Obstacle ajouté à l`épreuve !');
@@ -291,7 +296,7 @@ class CompetitionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Obstacle mise à jour !');
-            return new RedirectResponse($this->container->get('router')->generate('competition'));
+            return new RedirectResponse($this->container->get('router')->generate('obstacle', ['id' => $id]));
         }
 
         return $this->render('competition/newObs.html.twig', array(

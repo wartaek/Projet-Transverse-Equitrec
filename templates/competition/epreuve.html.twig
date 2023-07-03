@@ -110,10 +110,12 @@ document.querySelector('.alert').remove();
 					Ajouter un obstacle à l'épreuve
 				</button>
 			{% endif %}
-			<form
-				id="add-obstacle-form" method="post" action="{{ path('addObsEpre', {'idepr': epreuve.id}) }}" style="display:none;">
-				{# <input type="text" name="epreuve_id"> #}
-				<input type="text" name="obstacle_nom">
+			<form id="add-obstacle-form" method="post" action="{{ path('addObsEpre', {'idepr': epreuve.id}) }}" style="display:none;">
+				<select name="obstacle_nom">
+					{% for o in obstacle %}
+						<option value="{{ o.id }}">{{ o.nom }}</option>
+					{% endfor %}
+				</select>
 				<button type="submit">
 					Ajouter
 				</button>
