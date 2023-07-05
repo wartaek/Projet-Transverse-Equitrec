@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déja un compte avec cette adresse Email')]
@@ -16,12 +18,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['json'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['json'])]
     private array $roles = [];
 
     /**
@@ -31,18 +36,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['json'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['json'])]
     private ?\DateTimeInterface $last_login = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['json'])]
     private ?\DateTimeInterface $register_date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'User')]
+    #[Groups(['json'])]
+    #[ORM\ManyToOne(inversedBy: 'user')]
     private ?NoteTotal $noteTotal = null;
 
-    #[ORM\ManyToOne(inversedBy: 'User')]
+    #[Groups(['json'])]
+    #[ORM\ManyToOne(inversedBy: 'user')]
     private ?Competition $competition = null;
 
     public function getId(): ?int

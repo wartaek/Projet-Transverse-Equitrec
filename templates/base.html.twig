@@ -20,6 +20,7 @@
 			<a href="{{ path('app_note_competition') }}" style="text-decoration: none;">Notes</a>
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<a style="background-color: #baf3ff; text-decoration: none;" href="{{ path('compte') }}">Mon Compte</a>
+				<a style="text-decoration: none;" href="{{ path('listJuge') }}">Liste Juges</a>
 				<a href="{{ path('app_logout') }}" style="text-decoration: none;">Déconnexion</a>
 			{% else %}
 				<a href="{{ path('app_login') }}" style="text-decoration: none;">Connexion</a>
