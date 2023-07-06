@@ -18,15 +18,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['json'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['json'])]
     private array $roles = [];
 
     /**
@@ -40,14 +37,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['json'])]
     private ?\DateTimeInterface $last_login = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['json'])]
     private ?\DateTimeInterface $register_date = null;
 
-    #[Groups(['json'])]
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?NoteTotal $noteTotal = null;
 
@@ -125,6 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    #[SerializedName('name')]
     public function getName(): ?string
     {
         return $this->name;
@@ -173,6 +168,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    #[SerializedName('competition')]
     public function getCompetition(): ?Competition
     {
         return $this->competition;

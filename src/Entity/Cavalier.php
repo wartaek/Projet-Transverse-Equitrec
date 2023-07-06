@@ -6,6 +6,7 @@ use App\Repository\CavalierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CavalierRepository::class)]
 class Cavalier
@@ -13,18 +14,23 @@ class Cavalier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $license = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $dossard = null;
 
     #[ORM\ManyToOne(inversedBy: 'cavaliers')]
@@ -42,11 +48,13 @@ class Cavalier
         $this->competitions = new ArrayCollection();
     }
 
+    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -59,6 +67,7 @@ class Cavalier
         return $this;
     }
 
+    #[SerializedName('prenom')]
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -71,6 +80,7 @@ class Cavalier
         return $this;
     }
 
+    #[SerializedName('license')]
     public function getLicense(): ?int
     {
         return $this->license;
@@ -83,6 +93,7 @@ class Cavalier
         return $this;
     }
 
+    #[SerializedName('dossard')]
     public function getDossard(): ?string
     {
         return $this->dossard;

@@ -1,7 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}<link rel="stylesheet" href="/css/compte.css">
+{% block stylesheets %}
 	{{ parent() }}
+	<style>
+		main {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
+
+		.col-md-1 {
+			text-align: center;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.explication {
+			font-size: 26px;
+			font-style: italic;
+			margin-top: 20px;
+		}
+
+        h2 {
+            color: red;
+        }
+	</style>
 {% endblock %}
 {% block title %}
 	Liste des Juges
@@ -11,7 +38,12 @@
 	<main>
 		<div class="col-md-1">
 			<div>
-				<img src="{{ qrCodeDataUri }}" alt="Code QR des juges">
+				{% if qrCodeDataUri == 'Aucune compétition disponible pour ce juge.'%}
+					<h2 class="explication">{{ qrCodeDataUri }}</h2>
+				{% else %}
+					<h1 class="explication">Scanner le QR code pour acceder au competition disponible</h1>
+					<img src="{{ qrCodeDataUri }}" alt="Code QR des juges">
+				{% endif %}
 			</div>
 		</div>
 	</main>

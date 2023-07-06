@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
 class Competition
@@ -14,24 +15,30 @@ class Competition
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $ville = null;
 
     #[ORM\Column(length: 6)]
+    #[Groups(['json'])]
     private ?string $cp = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $adresse = null;
 
     #[ORM\ManyToMany(targetEntity: Cavalier::class, inversedBy: 'competitions')]
+    #[Groups(['json'])]
     private Collection $cavalier;
 
     #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]
@@ -47,11 +54,13 @@ class Competition
         $this->epreuves = new ArrayCollection();
     }
 
+    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -76,6 +85,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('ville')]
     public function getVille(): ?string
     {
         return $this->ville;
@@ -88,6 +98,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('cp')]
     public function getCp(): ?string
     {
         return $this->cp;
@@ -100,6 +111,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('adresse')]
     public function getAdresse(): ?string
     {
         return $this->adresse;
@@ -115,6 +127,7 @@ class Competition
     /**
      * @return Collection<int, cavalier>
      */
+    #[SerializedName('cavalier')]
     public function getCavalier(): Collection
     {
         return $this->cavalier;
