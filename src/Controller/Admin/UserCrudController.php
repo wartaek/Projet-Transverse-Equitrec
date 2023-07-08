@@ -42,7 +42,6 @@ class UserCrudController extends AbstractCrudController
             ChoiceField::new('roles')->setChoices($rolesChoices)->allowMultipleChoices(),
             DateTimeField::new('last_login')->hideOnForm(),
             DateTimeField::new('register_date')->hideOnForm(),
-            AssociationField::new('noteTotal'),
             AssociationField::new('competition'),
         ];
     }

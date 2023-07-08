@@ -2,16 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Allure;
 use App\Entity\Categorie;
 use App\Entity\Cavalier;
 use App\Entity\Competition;
+use App\Entity\Contrat;
 use App\Entity\Epreuve;
 use App\Entity\Niveau;
+use App\Entity\Note;
 use App\Entity\Obstacle;
 use App\Entity\Parametrer;
 use App\Entity\Penalite;
-use App\Entity\Posseder;
-use App\Entity\TypeNote;
+use App\Entity\Style;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -62,9 +64,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('List Parametrer', 'fas fa-bars', Parametrer::class);
         yield MenuItem::section('Penalite');
         yield MenuItem::linkToCrud('List Penalite', 'fas fa-bars', Penalite::class);
-        yield MenuItem::section('Posseder');
-        yield MenuItem::linkToCrud('List Posseder', 'fas fa-bars', Posseder::class);
-        yield MenuItem::section('TypeNote');
-        yield MenuItem::linkToCrud('List TypeNote', 'fas fa-bars', TypeNote::class);
+        yield MenuItem::section('Allure');
+        yield MenuItem::linkToCrud('List Allure', 'fas fa-bars', Allure::class);
+        yield MenuItem::section('Contrat');
+        yield MenuItem::linkToCrud('List Contrat', 'fas fa-bars', Contrat::class);
+        yield MenuItem::section('Note');
+        yield MenuItem::linkToCrud('List Note', 'fas fa-bars', Note::class);
+        yield MenuItem::section('Style');
+        yield MenuItem::linkToCrud('List Style', 'fas fa-bars', Style::class);
     }
 }

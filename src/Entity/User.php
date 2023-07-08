@@ -33,7 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Groups(['json'])]
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['json'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

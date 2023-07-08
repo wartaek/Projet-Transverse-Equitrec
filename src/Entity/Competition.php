@@ -20,7 +20,6 @@ class Competition
 
     #[Groups(['json'])]
     #[ORM\Column(length: 20)]
-    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -28,22 +27,18 @@ class Competition
 
     #[Groups(['json'])]
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $ville = null;
 
     #[Groups(['json'])]
     #[ORM\Column(length: 6)]
-    #[Groups(['json'])]
     private ?string $cp = null;
 
     #[Groups(['json'])]
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $adresse = null;
 
     #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Cavalier::class, inversedBy: 'competitions')]
-    #[Groups(['json'])]
     private Collection $cavalier;
 
     #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]

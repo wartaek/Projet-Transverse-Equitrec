@@ -2,25 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\TypeNote;
+use App\Entity\Allure;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
-class TypeNoteCrudController extends AbstractCrudController
+class AllureCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return TypeNote::class;
+        return Allure::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('libelleTypeNote'),
-            AssociationField::new('posseders'),
+            NumberField::new('val_allure'),
+            AssociationField::new('note'),
         ];
     }
 }

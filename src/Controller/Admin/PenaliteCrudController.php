@@ -21,7 +21,7 @@ class PenaliteCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('libellePenalite'),
             TextField::new('description'),
-            AssociationField::new('noteTotal'),
+            AssociationField::new('note'),
         ];
     }
 }

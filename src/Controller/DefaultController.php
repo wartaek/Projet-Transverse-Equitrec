@@ -98,7 +98,9 @@ class DefaultController extends AbstractController
             // }
 
             // $jsonContent = new JsonResponse($datas);
-            $jsonContent = $serializer->serialize($juges, 'json', ['groups' => 'json']);
+
+            $jsonContent = $serializer->serialize($juges, 'json', ['groups' => 'json', 'json_encode_options' => JSON_UNESCAPED_UNICODE]);
+
             // Générer le code QR avec le contenu JSON
             $qrCode = Builder::create()
                 ->writer(new PngWriter())
