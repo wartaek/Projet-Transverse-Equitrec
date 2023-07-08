@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
 class Competition
@@ -14,23 +15,29 @@ class Competition
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 50)]
     private ?string $ville = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 6)]
     private ?string $cp = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 50)]
     private ?string $adresse = null;
 
+    #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Cavalier::class, inversedBy: 'competitions')]
     private Collection $cavalier;
 

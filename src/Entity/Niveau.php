@@ -24,7 +24,7 @@ class Niveau
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'niveau')]
     private Collection $parametrers;
 
-    #[ORM\OneToOne(mappedBy: 'id_niveau', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'niveau', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function __construct()

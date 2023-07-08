@@ -6,6 +6,8 @@ use App\Repository\CavalierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: CavalierRepository::class)]
 class Cavalier
@@ -13,18 +15,23 @@ class Cavalier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $license = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $dossard = null;
 
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
