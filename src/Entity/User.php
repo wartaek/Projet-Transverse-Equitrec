@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déja un compte avec cette adresse Email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -32,6 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['json'])]
     private ?string $name = null;
@@ -41,9 +41,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $register_date = null;
-
-    #[ORM\ManyToOne(inversedBy: 'user')]
-    private ?NoteTotal $noteTotal = null;
 
     #[Groups(['json'])]
     #[ORM\ManyToOne(inversedBy: 'user')]
@@ -156,19 +153,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNoteTotal(): ?NoteTotal
-    {
-        return $this->noteTotal;
-    }
-
-    public function setNoteTotal(?NoteTotal $noteTotal): self
-    {
-        $this->noteTotal = $noteTotal;
-
-        return $this;
-    }
-
-    #[SerializedName('competition')]
     public function getCompetition(): ?Competition
     {
         return $this->competition;

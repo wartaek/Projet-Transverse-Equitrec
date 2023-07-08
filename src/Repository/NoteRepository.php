@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\NoteTotal;
+use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<NoteTotal>
+ * @extends ServiceEntityRepository<Note>
  *
- * @method NoteTotal|null find($id, $lockMode = null, $lockVersion = null)
- * @method NoteTotal|null findOneBy(array $criteria, array $orderBy = null)
- * @method NoteTotal[]    findAll()
- * @method NoteTotal[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Note|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Note|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Note[]    findAll()
+ * @method Note[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NoteTotalRepository extends ServiceEntityRepository
+class NoteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NoteTotal::class);
+        parent::__construct($registry, Note::class);
     }
 
-    public function save(NoteTotal $entity, bool $flush = false): void
+    public function save(Note $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class NoteTotalRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(NoteTotal $entity, bool $flush = false): void
+    public function remove(Note $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class NoteTotalRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return NoteTotal[] Returns an array of NoteTotal objects
+//     * @return Note[] Returns an array of Note objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class NoteTotalRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?NoteTotal
+//    public function findOneBySomeField($value): ?Note
 //    {
 //        return $this->createQueryBuilder('n')
 //            ->andWhere('n.exampleField = :val')
