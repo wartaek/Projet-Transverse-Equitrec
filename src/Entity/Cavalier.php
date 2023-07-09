@@ -18,15 +18,12 @@ class Cavalier
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
-    #[Groups(['json'])]
     private ?int $license = null;
 
     #[ORM\Column(length: 50)]

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ContratRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ContratRepository::class)]
 class Contrat
@@ -11,9 +12,11 @@ class Contrat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_contrat = null;
 
     #[ORM\OneToOne(mappedBy: 'id_contrat', cascade: ['persist', 'remove'])]

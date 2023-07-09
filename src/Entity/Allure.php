@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AllureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AllureRepository::class)]
 class Allure
@@ -11,9 +12,11 @@ class Allure
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_allure = null;
 
     #[ORM\OneToOne(mappedBy: 'id_allure', cascade: ['persist', 'remove'])]

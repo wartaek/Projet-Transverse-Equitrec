@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NoteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 class Note
@@ -19,18 +20,23 @@ class Note
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Cavalier $cavalier = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Niveau $niveau = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Style $style = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Contrat $contrat = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Allure $allure = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Penalite $penalite = null;
 
