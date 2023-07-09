@@ -30,12 +30,14 @@ class Cavalier
     #[Groups(['json'])]
     private ?string $dossard = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
     private Collection $niveaux;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'cavalier')]
     private Collection $competitions;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(mappedBy: 'cavalier', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
@@ -45,13 +47,11 @@ class Cavalier
         $this->competitions = new ArrayCollection();
     }
 
-    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -64,7 +64,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('prenom')]
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -77,7 +76,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('license')]
     public function getLicense(): ?int
     {
         return $this->license;
@@ -90,7 +88,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('dossard')]
     public function getDossard(): ?string
     {
         return $this->dossard;

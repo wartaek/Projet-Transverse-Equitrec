@@ -20,12 +20,11 @@ class Note
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Cavalier $cavalier = null;
 
-    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
     private ?Niveau $niveau = null;
 
-    #[Groups(['json'])]
     #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[Groups(['json'])]
     private ?Style $style = null;
 
     #[Groups(['json'])]
@@ -45,72 +44,72 @@ class Note
         return $this->id;
     }
 
-    public function getIdObstacle(): ?Obstacle
+    public function getObstacle(): ?Obstacle
     {
         return $this->obstacle;
     }
 
-    public function setIdObstacle(?Obstacle $obstacle): self
+    public function setObstacle(?Obstacle $obstacle): self
     {
         $this->obstacle = $obstacle;
 
         return $this;
     }
 
-    public function getIdCavalier(): ?Cavalier
+    public function getCavalier(): ?Cavalier
     {
         return $this->cavalier;
     }
 
-    public function setIdCavalier(?Cavalier $cavalier): self
+    public function setCavalier(?Cavalier $cavalier): self
     {
         $this->cavalier = $cavalier;
 
         return $this;
     }
 
-    public function getIdNiveau(): ?Niveau
+    public function getNiveau(): ?Niveau
     {
         return $this->niveau;
     }
 
-    public function setIdNiveau(?Niveau $niveau): self
+    public function setNiveau(?Niveau $niveau): self
     {
         $this->niveau = $niveau;
 
         return $this;
     }
 
-    public function getIdStyle(): ?Style
+    public function getStyle(): ?Style
     {
         return $this->style;
     }
 
-    public function setIdStyle(?Style $style): self
+    public function setStyle(?Style $style): self
     {
         $this->style = $style;
 
         return $this;
     }
 
-    public function getIdContrat(): ?Contrat
+    public function getContrat(): ?Contrat
     {
         return $this->contrat;
     }
 
-    public function setIdContrat(?Contrat $contrat): self
+    public function setContrat(?Contrat $contrat): self
     {
         $this->contrat = $contrat;
 
         return $this;
     }
 
-    public function getIdAllure(): ?Allure
+    public function getAllure(): ?Allure
     {
         return $this->allure;
     }
 
-    public function setIdAllure(?Allure $allure): self
+    public function setAllure(?Allure $allure): self
     {
         $this->allure = $allure;
 

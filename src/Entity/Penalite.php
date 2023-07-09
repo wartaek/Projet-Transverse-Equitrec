@@ -25,6 +25,7 @@ class Penalite
     private ?string $description = null;
     
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_penalite = null;
 
     #[ORM\OneToOne(mappedBy: 'penalite', cascade: ['persist', 'remove'])]
