@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Competition;
 use App\Entity\Cavalier;
 use App\Entity\Epreuve;
+use App\Entity\Obstacle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -72,14 +73,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $query = $entityManager->createQueryBuilder()
             ->select('u')
             ->addSelect('c')
+            ->addSelect('e')
+            ->addSelect('o')
             ->addSelect('ca')
             ->from('App\Entity\User', 'u')
             ->innerJoin('u.competition', 'c')
             ->leftJoin('c.cavalier', 'ca')
+            ->leftJoin('c.epreuves', 'e')
+            ->leftJoin('e.obstacle', 'o')
             ->where('c.date = CURRENT_DATE()')
             ->andWhere('u.id = :id')
             ->setParameter('id', $userId)
             ->getQuery();
+
         return $query->getResult();
     }
 

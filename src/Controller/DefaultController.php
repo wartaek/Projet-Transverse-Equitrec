@@ -58,7 +58,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/qwerCodeJuge/{id}", name="qwerCodeJuge")
      */
-    public function qwerCodeJuge(EntityManagerInterface $em, KernelInterface $kernel, SerializerInterface $serializer,$id): Response
+    public function qwerCodeJuge(EntityManagerInterface $em, KernelInterface $kernel, SerializerInterface $serializer, $id): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -98,9 +98,9 @@ class DefaultController extends AbstractController
             // }
 
             // $jsonContent = new JsonResponse($datas);
-
+            //dd($juges);
             $jsonContent = $serializer->serialize($juges, 'json', ['groups' => 'json', 'json_encode_options' => JSON_UNESCAPED_UNICODE]);
-
+            // dd($jsonContent);
             // Générer le code QR avec le contenu JSON
             $qrCode = Builder::create()
                 ->writer(new PngWriter())
