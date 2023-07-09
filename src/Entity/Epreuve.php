@@ -6,6 +6,7 @@ use App\Repository\EpreuveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EpreuveRepository::class)]
 class Epreuve
@@ -14,7 +15,8 @@ class Epreuve
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
+    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
@@ -30,6 +32,7 @@ class Epreuve
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'epreuve')]
     private Collection $parametrers;
 
+    #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Obstacle::class, inversedBy: 'epreuves')]
     private Collection $obstacle;
 

@@ -6,6 +6,7 @@ use App\Repository\ObstacleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ObstacleRepository::class)]
 class Obstacle
@@ -15,6 +16,7 @@ class Obstacle
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
@@ -24,7 +26,7 @@ class Obstacle
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
 
-    #[ORM\OneToOne(mappedBy: 'id_obstacle', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'obstacle', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function __construct()

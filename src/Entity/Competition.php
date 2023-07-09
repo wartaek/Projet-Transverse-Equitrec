@@ -44,6 +44,7 @@ class Competition
     #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]
     private Collection $user;
 
+    #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'competition')]
     private Collection $epreuves;
 
