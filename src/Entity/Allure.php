@@ -19,7 +19,7 @@ class Allure
     #[Groups(['json'])]
     private ?int $val_allure = null;
 
-    #[ORM\OneToOne(mappedBy: 'id_allure', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'allure', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function getId(): ?int

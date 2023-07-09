@@ -23,6 +23,9 @@ class Penalite
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $description = null;
+    
+    #[ORM\Column(nullable: true)]
+    private ?int $val_penalite = null;
 
     #[ORM\OneToOne(mappedBy: 'penalite', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
@@ -52,6 +55,18 @@ class Penalite
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getValPenalite(): ?int
+    {
+        return $this->val_penalite;
+    }
+
+    public function setValPenalite(?int $val_penalite): self
+    {
+        $this->val_penalite = $val_penalite;
 
         return $this;
     }

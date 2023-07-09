@@ -19,7 +19,7 @@ class Style
     #[Groups(['json'])]
     private ?int $val_style = null;
 
-    #[ORM\OneToOne(mappedBy: 'id_style', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'style', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function getId(): ?int
