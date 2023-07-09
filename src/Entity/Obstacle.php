@@ -24,7 +24,7 @@ class Obstacle
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'obstacle')]
     private Collection $epreuves;
 
-    #[ORM\OneToOne(mappedBy: 'id_obstacle', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'obstacle', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function __construct()

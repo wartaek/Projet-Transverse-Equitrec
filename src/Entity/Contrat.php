@@ -16,7 +16,7 @@ class Contrat
     #[ORM\Column(nullable: true)]
     private ?int $val_contrat = null;
 
-    #[ORM\OneToOne(mappedBy: 'id_contrat', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'contrat', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
     public function getId(): ?int
