@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AllureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AllureRepository::class)]
@@ -16,8 +18,13 @@ class Allure
     #[ORM\Column(nullable: true)]
     private ?int $val_allure = null;
 
-    #[ORM\OneToOne(mappedBy: 'allure', cascade: ['persist', 'remove'])]
-    private ?Note $note = null;
+    #[ORM\OneToMany(mappedBy: 'allure', targetEntity: Note::class)]
+    private Collection $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,24 +43,32 @@ class Allure
         return $this;
     }
 
-    public function getNote(): ?Note
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function setNote(?Note $note): self
+    public function addNote(Note $note): self
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setIdAllure(null);
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setAllure($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getIdAllure() !== $this) {
-            $note->setIdAllure($this);
-        }
+        return $this;
+    }
 
-        $this->note = $note;
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getAllure() === $this) {
+                $note->setAllure(null);
+            }
+        }
 
         return $this;
     }

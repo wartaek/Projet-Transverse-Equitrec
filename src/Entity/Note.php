@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NoteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
@@ -13,98 +15,102 @@ class Note
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Obstacle $obstacle = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Cavalier $cavalier = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Niveau $niveau = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Style $style = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Contrat $contrat = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Allure $allure = null;
 
-    #[ORM\OneToOne(inversedBy: 'note', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Penalite $penalite = null;
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdObstacle(): ?Obstacle
+    public function getObstacle(): ?Obstacle
     {
         return $this->obstacle;
     }
 
-    public function setIdObstacle(?Obstacle $obstacle): self
+    public function setObstacle(?Obstacle $obstacle): self
     {
         $this->obstacle = $obstacle;
 
         return $this;
     }
 
-    public function getIdCavalier(): ?Cavalier
+    public function getCavalier(): ?Cavalier
     {
         return $this->cavalier;
     }
 
-    public function setIdCavalier(?Cavalier $cavalier): self
+    public function setCavalier(?Cavalier $cavalier): self
     {
         $this->cavalier = $cavalier;
 
         return $this;
     }
 
-    public function getIdNiveau(): ?Niveau
+    public function getNiveau(): ?Niveau
     {
         return $this->niveau;
     }
 
-    public function setIdNiveau(?Niveau $niveau): self
+    public function setNiveau(?Niveau $niveau): self
     {
         $this->niveau = $niveau;
 
         return $this;
     }
 
-    public function getIdStyle(): ?Style
+    public function getStyle(): ?Style
     {
         return $this->style;
     }
 
-    public function setIdStyle(?Style $style): self
+    public function setStyle(?Style $style): self
     {
         $this->style = $style;
 
         return $this;
     }
 
-    public function getIdContrat(): ?Contrat
+    public function getContrat(): ?Contrat
     {
         return $this->contrat;
     }
 
-    public function setIdContrat(?Contrat $contrat): self
+    public function setContrat(?Contrat $contrat): self
     {
         $this->contrat = $contrat;
 
         return $this;
     }
 
-    public function getIdAllure(): ?Allure
+    public function getAllure(): ?Allure
     {
         return $this->allure;
     }
 
-    public function setIdAllure(?Allure $allure): self
+    public function setAllure(?Allure $allure): self
     {
         $this->allure = $allure;
 

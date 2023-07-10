@@ -24,8 +24,13 @@ class Penalite
     #[ORM\Column(nullable: true)]
     private ?int $val_penalite = null;
 
-    #[ORM\OneToOne(mappedBy: 'penalite', cascade: ['persist', 'remove'])]
-    private ?Note $note = null;
+    #[ORM\OneToMany(mappedBy: 'penalite', targetEntity: Note::class)]
+    private Collection $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -72,25 +77,32 @@ class Penalite
     {
         return $this->libellePenalite;
     }
-
-    public function getNote(): ?Note
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function setNote(?Note $note): self
+    public function addNote(Note $note): self
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setPenalite(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getPenalite() !== $this) {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
             $note->setPenalite($this);
         }
 
-        $this->note = $note;
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getPenalite() === $this) {
+                $note->setPenalite(null);
+            }
+        }
 
         return $this;
     }

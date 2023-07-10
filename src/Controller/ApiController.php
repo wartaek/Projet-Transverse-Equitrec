@@ -47,20 +47,18 @@ class ApiController extends AbstractController
                 $allure = $em->getRepository(Allure::class)->find($allureId);
                 $penalite = $em->getRepository(Penalite::class)->find($penaliteId);
 
-
                 $note = new Note();
-                $note->setIdObstacle($obstacle);
-                $note->setIdCavalier($cavalier);
-                $note->setIdNiveau($niveau);
-                $note->setIdStyle($style);
-                $note->setIdContrat($contrat);
-                $note->setIdAllure($allure);
+                $note->setObstacle($obstacle);
+                $note->setCavalier($cavalier);
+                $note->setNiveau($niveau);
+                $note->setStyle($style);
+                $note->setContrat($contrat);
+                $note->setAllure($allure);
                 $note->setPenalite($penalite);
 
                 $em->persist($note);
                 $em->flush();
             }
-
 
             return new JsonResponse([
                 'message' => 'Notes ajoutées avec succès',

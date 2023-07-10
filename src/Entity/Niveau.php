@@ -24,12 +24,13 @@ class Niveau
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'niveau')]
     private Collection $parametrers;
 
-    #[ORM\OneToOne(mappedBy: 'niveau', cascade: ['persist', 'remove'])]
-    private ?Note $note = null;
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: Note::class)]
+    private Collection $notes;
 
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,24 +94,32 @@ class Niveau
         return $this->nom;
     }
 
-    public function getNote(): ?Note
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function setNote(?Note $note): self
+    public function addNote(Note $note): self
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setIdNiveau(null);
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setNiveau($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getIdNiveau() !== $this) {
-            $note->setIdNiveau($this);
-        }
+        return $this;
+    }
 
-        $this->note = $note;
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getNiveau() === $this) {
+                $note->setNiveau(null);
+            }
+        }
 
         return $this;
     }
