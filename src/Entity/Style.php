@@ -6,6 +6,7 @@ use App\Repository\StyleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: StyleRepository::class)]
 class Style
@@ -13,9 +14,11 @@ class Style
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_style = null;
 
     #[ORM\OneToMany(mappedBy: 'style', targetEntity: Note::class)]

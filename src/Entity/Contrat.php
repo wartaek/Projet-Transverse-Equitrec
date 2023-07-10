@@ -6,6 +6,7 @@ use App\Repository\ContratRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ContratRepository::class)]
 class Contrat
@@ -13,9 +14,11 @@ class Contrat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_contrat = null;
 
     #[ORM\OneToMany(mappedBy: 'contrat', targetEntity: Note::class)]

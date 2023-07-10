@@ -3,6 +3,50 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="/css/compte.css">
+	<style>
+
+		.main {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.col-md-1 {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+
+		.juge-card {
+			width: 200px;
+			margin: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #f5f5f5;
+			text-align: center;
+		}
+
+		h3 {
+			margin-top: 0;
+		}
+
+		.btn {
+			display: inline-block;
+			margin-top: 10px;
+			padding: 8px 16px;
+			border-radius: 4px;
+			background-color: #007bff;
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.btn:hover {
+			background-color: #0056b3;
+		}
+	</style>
+
 {% endblock %}
 {% block title %}
 	Liste des Juges
@@ -10,18 +54,15 @@
 
 {% block content %}
 	<main>
-		<div class="col-md-1">
-			{% for juge in juges %}
+		{% for juge in juges %}
+			<div class="col-md-1">
 				<h3>{{ juge.name }}</h3>
 				<a href="{{ path('qwerCodeJuge', {'id': juge.id}) }}" class="btn btn-primary">
 					Acceder au QwerCode
 				</a>
-			{% endfor %}
-		</div>
-
-		{# <div>
-									<img src="{{ qrCodeDataUri }}" alt="Code QR des juges">
-								</div> #}
+			</div>
+			<hr>
+		{% endfor %}
 	</main>
 {% endblock %}
 {% block scripts %}

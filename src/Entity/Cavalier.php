@@ -18,27 +18,26 @@ class Cavalier
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
-    #[Groups(['json'])]
     private ?int $license = null;
 
     #[ORM\Column(length: 50)]
     #[Groups(['json'])]
     private ?string $dossard = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
     private Collection $niveaux;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'cavalier')]
     private Collection $competitions;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(mappedBy: 'cavalier', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
@@ -52,13 +51,11 @@ class Cavalier
         $this->notes = new ArrayCollection();
     }
 
-    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -71,7 +68,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('prenom')]
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -84,7 +80,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('license')]
     public function getLicense(): ?int
     {
         return $this->license;
@@ -97,7 +92,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('dossard')]
     public function getDossard(): ?string
     {
         return $this->dossard;

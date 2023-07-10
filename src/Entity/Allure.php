@@ -6,6 +6,7 @@ use App\Repository\AllureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AllureRepository::class)]
 class Allure
@@ -13,9 +14,11 @@ class Allure
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_allure = null;
 
     #[ORM\OneToMany(mappedBy: 'allure', targetEntity: Note::class)]

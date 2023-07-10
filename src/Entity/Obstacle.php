@@ -14,9 +14,9 @@ class Obstacle
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 

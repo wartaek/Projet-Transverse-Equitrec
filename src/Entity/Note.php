@@ -6,6 +6,7 @@ use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 class Note
@@ -25,14 +26,18 @@ class Note
     private ?Niveau $niveau = null;
 
     #[ORM\ManyToOne(inversedBy: 'notes')]
+    #[Groups(['json'])]
     private ?Style $style = null;
 
+    #[Groups(['json'])]
     #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Contrat $contrat = null;
 
+    #[Groups(['json'])]
     #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Allure $allure = null;
 
+    #[Groups(['json'])]
     #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?Penalite $penalite = null;
 
