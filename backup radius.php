@@ -32,9 +32,9 @@ class UserAuthentificator extends AbstractLoginFormAuthenticator
     {
         $email = $request->request->get('email', '');
         $password = $request->request->get('password');
-dd($email, $password);
-        $client = new Client('udp://127.0.0.1:1812', /* timeout */ 2);
-        $response = $client->send(new Packet(PacketType::ACCESS_REQUEST(), /* secret */ 'xyzzy5461', [
+
+        $client = new Client('udp://192.168.10.27:1812', /* timeout */ 2);
+        $response = $client->send(new Packet(PacketType::ACCESS_REQUEST(), /* secret */ 'Equitech', [
             'User-Name' => $email,
             'User-Password' => $password,
         ]));
