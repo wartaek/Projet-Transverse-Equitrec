@@ -56,7 +56,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/qwerCodeJuge/{id}", name="qwerCodeJuge")
+     * @Route("/QRCodeJuge/{id}", name="QRCodeJuge")
      */
     public function qwerCodeJuge(EntityManagerInterface $em, KernelInterface $kernel, SerializerInterface $serializer, $id): Response
     {

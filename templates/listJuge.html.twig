@@ -13,8 +13,8 @@
 		<div class="col-md-1">
 			{% for juge in juges %}
 				<h3>{{ juge.name }}</h3>
-				<a href="{{ path('qwerCodeJuge', {'id': juge.id}) }}" class="btn btn-primary">
-					Acceder au QwerCode
+				<a href="{{ path('QRCodeJuge', {'id': juge.id}) }}" class="btn btn-primary">
+					Acceder au QRCode
 				</a>
 			{% endfor %}
 		</div>
