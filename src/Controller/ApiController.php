@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-Use App\Entity\Note;
-Use App\Entity\Obstacle;
-Use App\Entity\Cavalier;
-Use App\Entity\Niveau;
-Use App\Entity\Style;
-Use App\Entity\Contrat;
-Use App\Entity\Allure;
-Use App\Entity\Penalite;
+use App\Entity\Note;
+use App\Entity\Obstacle;
+use App\Entity\Cavalier;
+use App\Entity\Niveau;
+use App\Entity\Style;
+use App\Entity\Contrat;
+use App\Entity\Allure;
+use App\Entity\Penalite;
 
 
 class ApiController extends AbstractController
@@ -26,7 +26,7 @@ class ApiController extends AbstractController
     public function receiveData(Request $request,  EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         if (is_array($data)) {
             // Pour chaque note
             foreach ($data as $noteData) {
