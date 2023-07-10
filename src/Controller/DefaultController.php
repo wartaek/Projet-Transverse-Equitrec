@@ -71,36 +71,38 @@ class DefaultController extends AbstractController
             $dataUri = 'Aucune compétition disponible pour ce juge.';
         } else {
 
-            // // Convertir les informations des juges en JSON
-            // $datas = array();
-            // foreach ($juges as $key => $juge) {
-            //     $datas[$key]['name'] = $juge->getName();
-            //     $datas[$key]['competition']['id'] = $juge->getCompetition()->getId();
-            //     $datas[$key]['competition']['nom'] = $juge->getCompetition()->getNom();
-            //     $datas[$key]['competition']['ville'] = $juge->getCompetition()->getVille();
-            //     $datas[$key]['competition']['cp'] = $juge->getCompetition()->getCp();
-            //     $datas[$key]['competition']['adresse'] = $juge->getCompetition()->getAdresse();
-            //     $cavaliers = $juge->getCompetition()->getCavalier();
-            //     foreach ($cavaliers as $cavalier) {
-            //         $cavalierData = [
-            //             'id' => $cavalier->getId(),
-            //             'nom' => $cavalier->getNom(),
-            //             'prenom' => $cavalier->getPrenom(),
-            //             'license' => $cavalier->getLicense(),
-            //             'dossard' => $cavalier->getDossard()
-            //         ];
+            // Convertir les informations des juges en JSON
+            //             $datas = array();
+            //             foreach ($juges as $key => $juge) {
+            //                 $datas[$key]['name'] = $juge->getName();
+            //                 $cavaliers = $juge->getCompetition()->getCavalier();
+            //                 foreach ($cavaliers as $cavalier) {
+            //                     $cavalierData = [
+            //                         'id' => $cavalier->getId(),
+            //                         'dossard' => $cavalier->getDossard(),
+            //                         'niveaux' => [],
+            //                         'noteStyle' => $cavalier->getNote() ? $cavalier->getNote()->getIdStyle() : null,
+            //                         'noteContrat' => $cavalier->getNote() ? $cavalier->getNote()->getIdContrat() : null,
+            //                         'noteAllure' => $cavalier->getNote() ? $cavalier->getNote()->getIdAllure() : null,
+            //                         'notePenalite' => $cavalier->getNote() ? $cavalier->getNote()->getPenalite() : null,                        
+            //                     ];
 
-            //         $datas[$key]['competition']['cavaliers'][] = $cavalierData;
-            //     }
+            //                     foreach ($cavalier->getNiveaux() as $niveau) {
+            //                         $niveauData = [
+            //                             'nom' => $niveau->getNom(),
+            //                         ];
+            //                         $cavalierData['niveaux'][] = $niveauData;
+            //                     }
 
-            //     // $datas[$key]['competition'] = $juge->getCompetition()->getCavalier()->getNoteTotal();
-            //     // $datas[$key]['competition'] = $juge->getCompetition()->getCavalier()->getNiveaux();
-            // }
+            //                     $datas[$key]['competition']['cavaliers'][] = $cavalierData;
+            //                 }
+            //             }
 
+            // dd($datas);
             // $jsonContent = new JsonResponse($datas);
             //dd($juges);
             $jsonContent = $serializer->serialize($juges, 'json', ['groups' => 'json', 'json_encode_options' => JSON_UNESCAPED_UNICODE]);
-            // dd($jsonContent);
+            //dd($jsonContent);
             // Générer le code QR avec le contenu JSON
             $qrCode = Builder::create()
                 ->writer(new PngWriter())

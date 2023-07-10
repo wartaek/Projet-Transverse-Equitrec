@@ -14,9 +14,9 @@ class Obstacle
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
@@ -29,10 +29,14 @@ class Obstacle
     #[ORM\OneToOne(mappedBy: 'obstacle', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
 
+    #[ORM\OneToMany(mappedBy: 'obstacle', targetEntity: Note::class)]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
         $this->epreuves = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,19 +120,32 @@ class Obstacle
         return $this->note;
     }
 
-    public function setNote(?Note $note): self
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setIdObstacle(null);
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setObstacle($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getIdObstacle() !== $this) {
-            $note->setIdObstacle($this);
-        }
+        return $this;
+    }
 
-        $this->note = $note;
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getObstacle() === $this) {
+                $note->setObstacle(null);
+            }
+        }
 
         return $this;
     }

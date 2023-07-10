@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ContratRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ContratRepository::class)]
 class Contrat
@@ -11,13 +14,20 @@ class Contrat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
     private ?int $val_contrat = null;
 
-    #[ORM\OneToOne(mappedBy: 'id_contrat', cascade: ['persist', 'remove'])]
-    private ?Note $note = null;
+    #[ORM\OneToMany(mappedBy: 'contrat', targetEntity: Note::class)]
+    private Collection $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,24 +46,33 @@ class Contrat
         return $this;
     }
 
-    public function getNote(): ?Note
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function setNote(?Note $note): self
+    public function addNote(Note $note): self
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setIdContrat(null);
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setContrat($this);
         }
 
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getIdContrat() !== $this) {
-            $note->setIdContrat($this);
-        }
+        return $this;
+    }
 
-        $this->note = $note;
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getContrat() === $this) {
+                $note->setContrat(null);
+            }
+        }
 
         return $this;
     }

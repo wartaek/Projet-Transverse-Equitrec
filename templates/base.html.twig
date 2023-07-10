@@ -17,7 +17,7 @@
 			<a href="{{ path('accueil') }}"><img src="{{ asset('img/MonLogo.jpg') }}" alt="Accueil" style="width: 80px; height: 80px; border-radius: 50%; text-decoration: none;"></a>
 			<a href="{{ path('competition') }}" style="text-decoration: none;">Competition</a>
 			<a href="{{ path('cavalier') }}" style="text-decoration: none;">Cavaliers</a>
-			<a href="{{ path('app_note_competition') }}" style="text-decoration: none;">Notes</a>
+			<a href="{{ path('app_obstacles') }}" style="text-decoration: none;">Obstacles</a>
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<a style="background-color: #baf3ff; text-decoration: none;" href="{{ path('compte') }}">Mon Compte</a>
 				<a style="text-decoration: none;" href="{{ path('listJuge') }}">Liste Juges</a>

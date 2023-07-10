@@ -6,6 +6,7 @@ use App\Repository\PenaliteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PenaliteRepository::class)]
 class Penalite
@@ -13,16 +14,27 @@ class Penalite
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $libellePenalite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $description = null;
+    
+    #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
+    private ?int $val_penalite = null;
 
-    #[ORM\OneToOne(mappedBy: 'penalite', cascade: ['persist', 'remove'])]
-    private ?Note $note = null;
+    #[ORM\OneToMany(mappedBy: 'penalite', targetEntity: Note::class)]
+    private Collection $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,29 +65,48 @@ class Penalite
         return $this;
     }
 
+    public function getValPenalite(): ?int
+    {
+        return $this->val_penalite;
+    }
+
+    public function setValPenalite(?int $val_penalite): self
+    {
+        $this->val_penalite = $val_penalite;
+
+        return $this;
+    }
+
     public function __toString()
     {
         return $this->libellePenalite;
     }
-
-    public function getNote(): ?Note
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
     {
-        return $this->note;
+        return $this->notes;
     }
 
-    public function setNote(?Note $note): self
+    public function addNote(Note $note): self
     {
-        // unset the owning side of the relation if necessary
-        if ($note === null && $this->note !== null) {
-            $this->note->setPenalite(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($note !== null && $note->getPenalite() !== $this) {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
             $note->setPenalite($this);
         }
 
-        $this->note = $note;
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getPenalite() === $this) {
+                $note->setPenalite(null);
+            }
+        }
 
         return $this;
     }

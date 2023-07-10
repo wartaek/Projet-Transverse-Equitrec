@@ -18,43 +18,44 @@ class Cavalier
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['json'])]
     private ?string $prenom = null;
 
     #[ORM\Column]
-    #[Groups(['json'])]
     private ?int $license = null;
 
     #[ORM\Column(length: 50)]
     #[Groups(['json'])]
     private ?string $dossard = null;
 
+    #[Groups(['json'])]
     #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Niveau::class)]
     private Collection $niveaux;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'cavalier')]
     private Collection $competitions;
 
+    #[Groups(['json'])]
     #[ORM\OneToOne(mappedBy: 'cavalier', cascade: ['persist', 'remove'])]
     private ?Note $note = null;
+
+    #[ORM\OneToMany(mappedBy: 'cavalier', targetEntity: Note::class)]
+    private Collection $notes;
 
     public function __construct()
     {
         $this->niveaux = new ArrayCollection();
         $this->competitions = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
-    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -67,7 +68,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('prenom')]
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -80,7 +80,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('license')]
     public function getLicense(): ?int
     {
         return $this->license;
@@ -93,7 +92,6 @@ class Cavalier
         return $this;
     }
 
-    #[SerializedName('dossard')]
     public function getDossard(): ?string
     {
         return $this->dossard;
@@ -177,15 +175,45 @@ class Cavalier
     {
         // unset the owning side of the relation if necessary
         if ($note === null && $this->note !== null) {
-            $this->note->setIdCavalier(null);
+            $this->note->setCavalier(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($note !== null && $note->getIdCavalier() !== $this) {
-            $note->setIdCavalier($this);
+        if ($note !== null && $note->getCavalier() !== $this) {
+            $note->setCavalier($this);
         }
 
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setCavalier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getCavalier() === $this) {
+                $note->setCavalier(null);
+            }
+        }
 
         return $this;
     }

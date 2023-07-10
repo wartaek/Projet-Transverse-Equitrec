@@ -15,25 +15,20 @@ class Competition
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['json'])]
     private ?int $id = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 50)]
     private ?string $ville = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 6)]
     private ?string $cp = null;
 
-    #[Groups(['json'])]
     #[ORM\Column(length: 50)]
     private ?string $adresse = null;
 
