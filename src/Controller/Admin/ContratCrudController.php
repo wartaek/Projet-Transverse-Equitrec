@@ -2,31 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\NoteTotal;
+use App\Entity\Contrat;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class NoteTotalCrudController extends AbstractCrudController
+class ContratCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return NoteTotal::class;
+        return Contrat::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            NumberField::new('note'),
-            TextField::new('observation'),
-            AssociationField::new('user'),
-            AssociationField::new('penalites'),
-            AssociationField::new('obstacles'),
-            AssociationField::new('cavaliers'),
-            AssociationField::new('posseders'),
+            NumberField::new('val_contrat'),
+            AssociationField::new('note'),
         ];
     }
 }

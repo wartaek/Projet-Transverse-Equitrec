@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
 class Competition
@@ -31,12 +32,14 @@ class Competition
     #[ORM\Column(length: 50)]
     private ?string $adresse = null;
 
+    #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Cavalier::class, inversedBy: 'competitions')]
     private Collection $cavalier;
 
     #[ORM\OneToMany(mappedBy: 'competition', targetEntity: User::class)]
     private Collection $user;
 
+    #[Groups(['json'])]
     #[ORM\ManyToMany(targetEntity: Epreuve::class, mappedBy: 'competition')]
     private Collection $epreuves;
 
@@ -47,11 +50,13 @@ class Competition
         $this->epreuves = new ArrayCollection();
     }
 
+    #[SerializedName('id')]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[SerializedName('nom')]
     public function getNom(): ?string
     {
         return $this->nom;
@@ -76,6 +81,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('ville')]
     public function getVille(): ?string
     {
         return $this->ville;
@@ -88,6 +94,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('cp')]
     public function getCp(): ?string
     {
         return $this->cp;
@@ -100,6 +107,7 @@ class Competition
         return $this;
     }
 
+    #[SerializedName('adresse')]
     public function getAdresse(): ?string
     {
         return $this->adresse;
@@ -115,6 +123,7 @@ class Competition
     /**
      * @return Collection<int, cavalier>
      */
+    #[SerializedName('cavalier')]
     public function getCavalier(): Collection
     {
         return $this->cavalier;

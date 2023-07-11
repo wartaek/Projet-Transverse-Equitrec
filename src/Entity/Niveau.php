@@ -6,6 +6,7 @@ use App\Repository\NiveauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NiveauRepository::class)]
 class Niveau
@@ -15,6 +16,7 @@ class Niveau
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['json'])]
     #[ORM\Column(length: 20)]
     private ?string $nom = null;
 
@@ -24,9 +26,13 @@ class Niveau
     #[ORM\ManyToMany(targetEntity: Parametrer::class, mappedBy: 'niveau')]
     private Collection $parametrers;
 
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: Note::class)]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->parametrers = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,5 +94,35 @@ class Niveau
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getNiveau() === $this) {
+                $note->setNiveau(null);
+            }
+        }
+
+        return $this;
     }
 }

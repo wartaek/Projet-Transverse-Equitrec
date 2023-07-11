@@ -2,27 +2,30 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Niveau;
+use App\Entity\Note;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class NiveauCrudController extends AbstractCrudController
+class NoteCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Niveau::class;
+        return Note::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nom'),
+            AssociationField::new('obstacle'),
             AssociationField::new('cavalier'),
-            AssociationField::new('parametrers'),
-            AssociationField::new('note'),
+            AssociationField::new('niveau'),
+            AssociationField::new('style'),
+            AssociationField::new('contrat'),
+            AssociationField::new('allure'),
+            AssociationField::new('penalite'),
         ];
     }
 }

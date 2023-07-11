@@ -3,6 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Competition;
+use App\Entity\Cavalier;
+use App\Entity\Epreuve;
+use App\Entity\Obstacle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -56,28 +60,60 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Récupère la liste des compétitions avec les cavaliers et les obstacles associés.
+     *
+     * @param int $userId L'ID de l'utilisateur
+     * @return array
+     */
+    public function getCompetitionsWithCavaliersAndObstacles($userId)
+    {
+        $entityManager = $this->getEntityManager();
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $entityManager->createQueryBuilder()
+            ->select('u')
+            ->addSelect('c')
+            ->addSelect('e')
+            ->addSelect('o')
+            ->addSelect('ca')
+            ->addSelect('niv')
+            ->from('App\Entity\User', 'u')
+            ->innerJoin('u.competition', 'c')
+            ->leftJoin('c.cavalier', 'ca')
+            ->leftJoin('ca.note', 'n')
+            ->leftJoin('ca.niveaux', 'niv')
+            ->leftJoin('c.epreuves', 'e')
+            ->leftJoin('e.obstacle', 'o')
+            ->where('c.date = CURRENT_DATE()')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $userId)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    //    /**
+    //     * @return User[] Returns an array of User objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('u.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?User
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

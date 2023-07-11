@@ -24,9 +24,9 @@ class CavalierCrudController extends AbstractCrudController
             TextField::new('prenom'),
             NumberField::new('license'),
             TextField::new('dossard'),
-            AssociationField::new('noteTotal'),
             AssociationField::new('niveaux'),
             AssociationField::new('competitions'),
+            AssociationField::new('note'),
         ];
     }
 }

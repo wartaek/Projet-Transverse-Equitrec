@@ -20,9 +20,9 @@ class ObstacleCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nom'),
-            AssociationField::new('noteTotal'),
             AssociationField::new('parametrers'),
             AssociationField::new('epreuves'),
+            AssociationField::new('note'),
         ];
     }
 }

@@ -2,28 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Posseder;
+use App\Entity\Style;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class PossederCrudController extends AbstractCrudController
+class StyleCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Posseder::class;
+        return Style::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            NumberField::new('val'),
-            TextField::new('nom'),
-            AssociationField::new('noteTotal'),
-            AssociationField::new('typeNote'),
+            NumberField::new('val_style'),
+            AssociationField::new('note'),
         ];
     }
 }

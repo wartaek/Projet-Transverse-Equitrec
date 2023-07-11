@@ -6,6 +6,7 @@ use App\Repository\PenaliteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PenaliteRepository::class)]
 class Penalite
@@ -13,20 +14,26 @@ class Penalite
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['json'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['json'])]
     private ?string $libellePenalite = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $description = null;
+    
+    #[ORM\Column(nullable: true)]
+    #[Groups(['json'])]
+    private ?int $val_penalite = null;
 
-    #[ORM\ManyToMany(targetEntity: NoteTotal::class, inversedBy: 'penalites')]
-    private Collection $noteTotal;
+    #[ORM\OneToMany(mappedBy: 'penalite', targetEntity: Note::class)]
+    private Collection $notes;
 
     public function __construct()
     {
-        $this->noteTotal = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,26 +65,14 @@ class Penalite
         return $this;
     }
 
-    /**
-     * @return Collection<int, NoteTotal>
-     */
-    public function getNoteTotal(): Collection
+    public function getValPenalite(): ?int
     {
-        return $this->noteTotal;
+        return $this->val_penalite;
     }
 
-    public function addNoteTotal(NoteTotal $noteTotal): self
+    public function setValPenalite(?int $val_penalite): self
     {
-        if (!$this->noteTotal->contains($noteTotal)) {
-            $this->noteTotal->add($noteTotal);
-        }
-
-        return $this;
-    }
-
-    public function removeNoteTotal(NoteTotal $noteTotal): self
-    {
-        $this->noteTotal->removeElement($noteTotal);
+        $this->val_penalite = $val_penalite;
 
         return $this;
     }
@@ -85,5 +80,34 @@ class Penalite
     public function __toString()
     {
         return $this->libellePenalite;
+    }
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setPenalite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getPenalite() === $this) {
+                $note->setPenalite(null);
+            }
+        }
+
+        return $this;
     }
 }
